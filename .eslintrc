@@ -5,7 +5,8 @@
     },
     "extends": [
         "airbnb",
-        "prettier"
+        "prettier",
+        "prettier/react"
     ],
     "parserOptions": {
         "ecmaVersion": 6,
@@ -20,6 +21,7 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        "jsx-a11y/anchor-is-valid": "off"
+        "jsx-a11y/anchor-is-valid": "off",
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }]
     }
 }
