@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css, createGlobalStyle } from 'styled-components';
 
 const displaySizes = {
   large: 1024,
@@ -16,3 +16,12 @@ export const mediaSize = Object.keys(displaySizes).reduce((acc, label) => {
 
   return acc;
 }, {});
+
+
+export const GlobalStyle = createGlobalStyle`
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'SF Pro Display', serif;
+  }
+`;
