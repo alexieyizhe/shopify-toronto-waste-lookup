@@ -7,3 +7,7 @@ export const siteColors = {
 };
 
 export const siteTitle = 'Toronto Waste Lookup';
+
+export const searchBarPlaceholder = 'Enter a search';
+
+export const siteSubtitle = 'Favourites';
