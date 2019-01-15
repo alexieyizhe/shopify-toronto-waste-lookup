@@ -1,6 +1,6 @@
 workflow "New workflow" {
   on = "pull_request"
-  resolves = ["new-action"]
+  resolves = ["Master Branch"]
 }
 
 action "Build" {
@@ -11,7 +11,7 @@ action "Build" {
 action "Lint" {
   uses = "actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437"
   needs = ["Build"]
-  runs = "lint"
+  runs = ["lint", "prettier"]
 }
 
 action "Test" {
@@ -24,9 +24,4 @@ action "Master Branch" {
   uses = "actions/bin/filter@b2bea0749eed6beb495a8fa194c071847af60ea1"
   needs = ["Test"]
   args = "branch master"
-}
-
-action "new-action" {
-  uses = "owner/repo/path@ref"
-  needs = ["Master Branch"]
 }
