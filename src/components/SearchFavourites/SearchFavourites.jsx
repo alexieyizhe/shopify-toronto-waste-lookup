@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { siteSubtitle } from '../../utils/siteData';
+
 const ComponentContainer = styled.div`
   height: auto;
   min-height: 10vh;
@@ -22,7 +24,7 @@ const SubHeader = styled.div`
 // Component
 export default ({ children }) => (
   <ComponentContainer>
-    <SubHeader>Favourites</SubHeader>
+    <SubHeader>{siteSubtitle}</SubHeader>
     {children}
   </ComponentContainer>
 );

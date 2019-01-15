@@ -1,3 +1,5 @@
+// should refactor into json and move into data folder later
+
 export const siteTheme = {
   colors: {
     primary: '#1d5a94',
@@ -16,3 +18,5 @@ export const siteTheme = {
 export const siteTitle = 'Toronto Waste Lookup';
 
 export const searchBarPlaceholder = 'Enter a search';
+
+export const siteSubtitle = 'Favourites';
