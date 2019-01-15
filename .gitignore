@@ -61,3 +61,5 @@ typings/
 public/
 .cache/
 
+# Stupid Mac stuff
+.DS_Store
