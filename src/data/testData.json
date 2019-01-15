@@ -1,0 +1,26 @@
+[
+  {
+    "body": "&lt;ul&gt; \n &lt;li&gt;Place item in the &lt;strong&gt;Garbage Bin.&lt;\/strong&gt;&lt;\/li&gt; \n&lt;\/ul&gt;",
+    "category": "Garbage",
+    "title": "Garbage (wrapping and tying)",
+    "keywords": "bread bag tag, milk bag tag, elastic band, rubber band, twist tie, rope, twine, string, hemp, ribbon, bow, burlap, staple, fastener, wire, florists wire, plastic tag, tape, duct tape, electrical tape, masking tape, scotch tape, painters tape, tape dispenser, chain, nylon, thread"
+  },
+  {
+    "body": "&lt;ul&gt; \n &lt;li&gt;Place this item in the&amp;nbsp;&lt;strong&gt;Blue Bin&lt;\/strong&gt;.&lt;\/li&gt; \n&lt;\/ul&gt;",
+    "category": "Blue Bin",
+    "title": "Blue Bin (metal lid)",
+    "keywords": "metal lids, glass bottle lids, glass jar lids, Mason jar lids"
+  },
+  {
+    "body": "Items that would never fit in your Garbage Bin, when empty, are considered oversize and collected curbside. Please place this item 0.5 metre (2 feet) away from your Garbage Bin on your scheduled garbage collection day for free pick-up. Bag tags are not required.",
+    "category": "Oversize",
+    "title": "Oversize (home items)",
+    "keywords": "laundry basket, clothes basket, hamper, sewing machine, vacuum cleaner, carpet steamer, water softener, water softening system, plastic fan, ceiling fan"
+  },
+  {
+    "body": "&lt;ul&gt; \n &lt;li&gt;Place this empty item in your &lt;strong&gt;Blue Bin&lt;\/strong&gt;, though if it is soiled with food, please place it in your &lt;strong&gt;Green Bin&lt;\/strong&gt;.&lt;\/li&gt; \n&lt;\/ul&gt;",
+    "category": "Blue Bin",
+    "title": "Blue Bin (molded paper)",
+    "keywords": "molded paper, paper egg cartons, paper take-out coffee trays, paper berry boxes"
+  }
+]
