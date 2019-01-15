@@ -1,6 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import Star from 'react-feather/dist/icons/star';
+
+import { ItemsContext } from '../../utils/siteContext';
 
 const ComponentContainer = styled.div`
   width: 100%;
@@ -42,16 +44,22 @@ const DescContainer = styled.div`
 `;
 
 // Component
-export default ({title, body}) => (
-  <ComponentContainer>
-    <FavouriteButton><Star size="1vw"/></FavouriteButton>
-    <TitleContainer>{title}</TitleContainer>
-    <DescContainer>
-      <ul>
-        <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
-        <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
-        <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
-      </ul>
-    </DescContainer>
-  </ComponentContainer>
+const ItemCard = ({title, body, ith, isFavourite, theme}) => (
+  <ItemsContext.Consumer>
+    {({items, favs, updateFavs}) => (
+      <ComponentContainer>
+        <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}><Star size="1vw" color={isFavourite ? theme.colors.secondary : theme.colors.offBlack}/></FavouriteButton>
+        <TitleContainer>{title}</TitleContainer>
+        <DescContainer>
+          <ul>
+            <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
+            <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
+            <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
+          </ul>
+        </DescContainer>
+      </ComponentContainer>
+    )}
+  </ItemsContext.Consumer>
 );
+
+export default withTheme(ItemCard);
