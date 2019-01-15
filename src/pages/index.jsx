@@ -56,10 +56,10 @@ class App extends React.Component {
           <ItemsContext.Provider value={this.state}>
             <SearchBar />
             <SearchResults>
-              {currentItems.map((item, i) => (<ItemCard title={item.title} body={item.body} ith={i} />))}
+              {currentItems.map((item, i) => (<ItemCard title={item.title} body={item.body} ith={i} isFavourite={currentFavs.has(i)}/>))}
             </SearchResults>
             <SearchFavourites>
-              {Array.from(currentFavs).map(favIndex => <ItemCard title={currentItems[favIndex].title} body={currentItems[favIndex].body} ith={favIndex} remove/>)}
+              {Array.from(currentFavs).map(favIndex => <ItemCard title={currentItems[favIndex].title} body={currentItems[favIndex].body} ith={favIndex} isFavourite/>)}
             </SearchFavourites>
           </ItemsContext.Provider>
         </AppContainer>

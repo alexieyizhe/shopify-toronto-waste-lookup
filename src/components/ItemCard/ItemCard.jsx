@@ -44,11 +44,11 @@ const DescContainer = styled.div`
 `;
 
 // Component
-const ItemCard = ({title, body, ith, remove, theme}) => (
+const ItemCard = ({title, body, ith, isFavourite, theme}) => (
   <ItemsContext.Consumer>
     {({items, favs, updateFavs}) => (
       <ComponentContainer>
-        <FavouriteButton onClick={() => updateFavs(ith, remove)}><Star size="1vw" color={remove ? theme.colors.secondary : theme.colors.offBlack}/></FavouriteButton>
+        <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}><Star size="1vw" color={isFavourite ? theme.colors.secondary : theme.colors.offBlack}/></FavouriteButton>
         <TitleContainer>{title}</TitleContainer>
         <DescContainer>
           <ul>
