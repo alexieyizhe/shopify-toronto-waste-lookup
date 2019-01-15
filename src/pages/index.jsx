@@ -58,9 +58,10 @@ class App extends React.Component {
             <SearchResults>
               {currentItems.map((item, i) => (<ItemCard title={item.title} body={item.body} ith={i} isFavourite={currentFavs.has(i)}/>))}
             </SearchResults>
-            <SearchFavourites>
-              {Array.from(currentFavs).map(favIndex => <ItemCard title={currentItems[favIndex].title} body={currentItems[favIndex].body} ith={favIndex} isFavourite/>)}
-            </SearchFavourites>
+            {currentFavs.size > 0 &&
+              <SearchFavourites>
+                {Array.from(currentFavs).map(favIndex => <ItemCard title={currentItems[favIndex].title} body={currentItems[favIndex].body} ith={favIndex} isFavourite/>)}
+              </SearchFavourites>}
           </ItemsContext.Provider>
         </AppContainer>
       </ThemeProvider>
