@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-// import { Link, graphql } from 'gatsby';
+import "isomorphic-fetch";
 
 import { siteTitle, siteTheme, wasteDataAPIEndPoint } from '../utils/siteData';
 import { GlobalStyle } from '../utils/siteTools';
