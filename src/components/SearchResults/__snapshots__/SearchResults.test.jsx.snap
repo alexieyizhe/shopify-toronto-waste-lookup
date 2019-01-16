@@ -9,5 +9,22 @@ exports[`renders correctly 1`] = `
 
 <div
   className="c0"
-/>
+>
+  <div>
+    test div
+  </div>
+  <a
+    href="test thing thing"
+  >
+    test link
+  </a>
+  <div>
+    <div>
+      wogewog
+      <span>
+        wgwegww????!@$!@
+      </span>
+    </div>
+  </div>
+</div>
 `;

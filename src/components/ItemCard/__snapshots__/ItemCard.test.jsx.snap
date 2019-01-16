@@ -51,7 +51,7 @@ exports[`renders correctly 1`] = `
     <svg
       fill="none"
       height="1vw"
-      stroke="#333"
+      stroke="#23975e"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
@@ -71,33 +71,12 @@ exports[`renders correctly 1`] = `
   </div>
   <div
     className="c3"
-  >
-    <ul>
-      <li
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "This is a test body",
-          }
-        }
-      />
-       
-      <li
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "This is a test body",
-          }
-        }
-      />
-       
-      <li
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "This is a test body",
-          }
-        }
-      />
-       
-    </ul>
-  </div>
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "<ul> \\\\n <li>Empty and rinse (if necessary and possible) this item before placing it in the&nbsp;<strong>Blue Bin<\\\\/strong>.<\\\\/li> \\\\n<\\\\/ul>",
+      }
+    }
+  />
+   
 </div>
 `;
