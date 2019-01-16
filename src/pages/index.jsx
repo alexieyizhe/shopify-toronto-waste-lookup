@@ -6,6 +6,7 @@ import { siteTitle, siteTheme, wasteDataAPIEndPoint } from '../utils/siteData';
 import { GlobalStyle } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
+import HelmetHead from '../components/HelmetHead/HelmetHead';
 import PageHeader from '../components/PageHeader/PageHeader';
 import SearchBar from '../components/SearchBar/SearchBar';
 import SearchResults from '../components/SearchResults/SearchResults';
@@ -38,18 +39,13 @@ class App extends React.Component {
     }
 
     this.startSearch = () =>{
-      let newSearchResults = new Set(); // eslint-disable-line (newSearchResults is manipulated in the next few lines)
-      this.wasteItems.map((item, i) => {
-        const match = (item.keywords.search(this.state.searchQuery) >= 0);
+      const { searchQuery } = this.state;
+      let newSearchResults = new Set(); // eslint-disable-line
+
+      this.wasteItems.forEach((item, i) => {
+        const match = (item.keywords.search(searchQuery) >= 0);
         if(match) newSearchResults.add(i);
       });
-
-      // TESTING ONLY
-      // const fuse = new Fuse(this.wasteItems, searchOptions);
-      // const searchRes = fuse.search(this.state.searchQuery);
-      // const testSearchArray = Array.from({length: 6}, () => Math.floor(Math.random() * 50));
-      // TESTING ONLY
-
       this.setState({ searchResults: newSearchResults})
     }
 
@@ -81,32 +77,34 @@ class App extends React.Component {
     const { searchResults, currentFavs } = this.state;
     return (
       <ThemeProvider theme={siteTheme}>
-        <AppContainer>
+        <>
+          <HelmetHead />
           <GlobalStyle />
+          <AppContainer>
+            <PageHeader title={siteTitle} />
+            <ItemsContext.Provider value={this.state}>
 
-          <PageHeader title={siteTitle} />
-          <ItemsContext.Provider value={this.state}>
-
-            <SearchBar />
-
-
-            <SearchResults>
-              {Array.from(searchResults).map(resultIndex => {
-                const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
-                return resultItem ? <ItemCard key={resultIndex} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
-              })}
-            </SearchResults>
+              <SearchBar />
 
 
-            <SearchFavourites>
-              {Array.from(currentFavs).map(favIndex => {
-                const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
-                return favItem ? <ItemCard key={favIndex} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
-              })}
-            </SearchFavourites>
+              <SearchResults>
+                {Array.from(searchResults).map(resultIndex => {
+                  const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
+                  return resultItem ? <ItemCard key={resultIndex} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
+                })}
+              </SearchResults>
 
-          </ItemsContext.Provider>
-        </AppContainer>
+
+              <SearchFavourites>
+                {Array.from(currentFavs).map(favIndex => {
+                  const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
+                  return favItem ? <ItemCard key={favIndex} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
+                })}
+              </SearchFavourites>
+
+            </ItemsContext.Provider>
+          </AppContainer>
+        </>
       </ThemeProvider>
     );
   }
