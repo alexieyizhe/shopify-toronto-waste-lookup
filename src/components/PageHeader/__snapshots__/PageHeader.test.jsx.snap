@@ -4,8 +4,8 @@ exports[`renders correctly 1`] = `
 .c0 {
   background-color: grey;
   width: 100%;
-  height: 17vh;
-  margin-top: 1vh;
+  height: 15vh;
+  margin-top: 2vh;
   background-image: linear-gradient(to right,#1d5a94,#23975e);
   display: -webkit-box;
   display: -webkit-flex;
@@ -16,7 +16,7 @@ exports[`renders correctly 1`] = `
 .c0 > div.pageTitle {
   margin: auto;
   color: white;
-  font-size: 3vw;
+  font-size: 1.5em;
   font-weight: 600;
 }
 

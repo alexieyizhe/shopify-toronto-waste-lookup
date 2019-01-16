@@ -4,7 +4,7 @@ exports[`renders correctly 1`] = `
 .c0 {
   width: 100%;
   height: auto;
-  padding-bottom: 2vw;
+  margin-bottom: 2vw;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -16,22 +16,19 @@ exports[`renders correctly 1`] = `
   -webkit-justify-content: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
-  font-size: 1.5vw;
 }
 
 .c1 {
-  grid-area: fav;
   width: 3%;
+  padding-top: 2px;
 }
 
 .c2 {
-  grid-area: title;
   color: #333;
   width: 45%;
 }
 
 .c3 {
-  grid-area: desc;
   color: #333;
   width: 50%;
 }
@@ -39,6 +36,60 @@ exports[`renders correctly 1`] = `
 .c3 > ul {
   margin: 0;
   padding: 0;
+}
+
+@media (max-width:64em) {
+  .c0 {
+    width: 90%;
+    padding: 5vw 2vw;
+    box-shadow: rgba(0,0,0,0.1) 0px 7px 40px;
+    margin: 0 auto 5vw auto;
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 'fav title' 'desc desc';
+    justify-items: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width:64em) {
+  .c1 {
+    grid-area: fav;
+    width: auto;
+  }
+}
+
+@media (max-width:37.5em) {
+  .c1 {
+    -webkit-align-self: start;
+    -ms-flex-item-align: start;
+    align-self: start;
+    padding-top: 0;
+  }
+}
+
+@media (max-width:64em) {
+  .c2 {
+    grid-area: title;
+    width: 100%;
+  }
+}
+
+@media (max-width:64em) {
+  .c3 {
+    grid-area: desc;
+    justify-self: center;
+    width: 95%;
+  }
+
+  .c3 > ul > li {
+    list-style-type: none;
+    margin-top: 2vw;
+  }
 }
 
 <div
@@ -50,13 +101,13 @@ exports[`renders correctly 1`] = `
   >
     <svg
       fill="none"
-      height="1vw"
+      height="2vh"
       stroke="#23975e"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
       viewBox="0 0 24 24"
-      width="1vw"
+      width="2vh"
       xmlns="http://www.w3.org/2000/svg"
     >
       <polygon

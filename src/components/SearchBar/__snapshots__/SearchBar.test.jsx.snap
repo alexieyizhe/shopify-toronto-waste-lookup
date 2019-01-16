@@ -2,11 +2,12 @@
 
 exports[`renders correctly 1`] = `
 .c0 {
-  height: 8vh;
-  margin: 1vw 0;
+  height: 7vh;
+  margin: 2vh 0;
 }
 
 .c0 > form {
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -18,22 +19,35 @@ exports[`renders correctly 1`] = `
   -webkit-justify-content: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  height: 100%;
 }
 
 .c1 {
   width: 90%;
-  padding: 1vw;
-  font-size: 2vw;
+  font-size: 1em;
+  padding: 1vh;
   border: none;
   border-radius: 5px;
-  border: 1px solid #333;
+  border: 1px solid grey;
 }
 
 .c2 {
-  width: 8vh;
-  height: 8vh;
+  width: 7vh;
   background-color: #23975e;
+  border: none;
   border-radius: 5px;
+}
+
+@media (max-width:64em) {
+  .c1 {
+    width: 80%;
+  }
+}
+
+@media (max-width:37.5em) {
+  .c1 {
+    width: 70%;
+  }
 }
 
 <div
@@ -52,13 +66,13 @@ exports[`renders correctly 1`] = `
     >
       <svg
         fill="none"
-        height="2vw"
+        height="4vh"
         stroke="white"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
         viewBox="0 0 24 24"
-        width="2vw"
+        width="4vh"
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle

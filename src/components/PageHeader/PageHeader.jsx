@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const ComponentContainer = styled.div`
   background-color: grey;
   width: 100%;
-  height: 17vh;
+  height: 15vh;
 
-  margin-top: 1vh;
+  margin-top: 2vh;
 
   background-image: ${props => `linear-gradient(to right, ${props.theme.colors.primary}, ${props.theme.colors.secondary})`}; // TODO: match gradient in design pic more
 
@@ -16,7 +16,7 @@ const ComponentContainer = styled.div`
     margin: auto;
 
     color: white;
-    font-size: 3vw;
+    font-size: 1.5em;
     font-weight: 600;
   }
 `;
