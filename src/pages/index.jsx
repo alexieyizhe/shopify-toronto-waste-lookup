@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import "isomorphic-fetch";
 
-import { siteTitle, siteTheme, wasteDataAPIEndPoint } from '../utils/siteData';
+import { siteTitle, siteTheme, wasteDataAPIEndPoint, FetchStateEnum } from '../utils/siteData';
 import { GlobalStyle, mediaSize } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
@@ -12,6 +12,7 @@ import SearchBar from '../components/SearchBar/SearchBar';
 import SearchResults from '../components/SearchResults/SearchResults';
 import SearchFavourites from '../components/SearchFavourites/SearchFavourites';
 import ItemCard from '../components/ItemCard/ItemCard';
+
 
 // refactor into template later?
 const AppContainer = styled.div`
@@ -45,34 +46,40 @@ class App extends React.Component {
     }
 
     this.updateSearch = (searchQuery) => {
-      this.setState(prevState => ({ searchQuery, searchResults: searchQuery.length ? prevState.searchResults : new Set() }));
+      this.setState(prevState => ({
+        searchQuery,
+        searchResults: searchQuery.length ? prevState.searchResults : new Set(),
+        appStatus: searchQuery.length ? prevState.appStatus : FetchStateEnum.READY
+      }));
     }
 
-    this.startSearch = () =>{
-      const { searchQuery } = this.state;
-      let newSearchResults = new Set(); // eslint-disable-line
+    this.startSearch = () => {
+      if(this.state.appStatus === FetchStateEnum.READY || this.state.appStatus === FetchStateEnum.SEARCHING) { // eslint-disable-line
+        const { searchQuery } = this.state;
+        let newSearchResults = new Set(); // eslint-disable-line
 
-      this.wasteItems.forEach((item, i) => {
-        const match = (item.keywords.search(searchQuery) >= 0);
-        if(match) newSearchResults.add(i);
-      });
-      this.setState({ searchResults: newSearchResults})
+        this.wasteItems.forEach((item, i) => {
+          const match = (item.keywords.search(searchQuery) >= 0);
+          if(match) newSearchResults.add(i);
+        });
+        this.setState({ searchResults: newSearchResults, appStatus: FetchStateEnum.SEARCHING })
+      }
     }
 
     /* FETCHING JSON DATA FROM API */
-    fetch(wasteDataAPIEndPoint).then(response => {
-      return response.json();
-
-    }).then(wasteItemData => {
+    fetch(wasteDataAPIEndPoint).then(response => (
+      response.json()
+    )).then(wasteItemData => {
       this.wasteItems = wasteItemData;
-
-    }).catch(err => {
+      this.setState({ appStatus: FetchStateEnum.READY });
+    }).catch(() => {
       // TODO: add error handling, possible in state to display an error when API is down
-
+      this.setState({ appStatus: FetchStateEnum.ERROR });
     });
 
     /* SET INITIAL STATE */
     this.state = {
+      appStatus: FetchStateEnum.WAITING,
       searchQuery: '',
       searchResults: new Set(),
       currentFavs: new Set(), // eslint-disable-line
@@ -84,7 +91,7 @@ class App extends React.Component {
 
 
   render() {
-    const { searchResults, currentFavs } = this.state;
+    const { searchResults, currentFavs, appStatus } = this.state;
     return (
       <ThemeProvider theme={siteTheme}>
         <>
@@ -98,7 +105,8 @@ class App extends React.Component {
 
 
               <SearchResults>
-                {Array.from(searchResults).map((resultIndex, i) => {
+                {(appStatus === FetchStateEnum.READY || appStatus === FetchStateEnum.SEARCHING) &&
+                  Array.from(searchResults).map((resultIndex, i) => {
                   const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
                   return resultItem ? <ItemCard delayIndex={i} key={`favs${resultIndex}`} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
                 })}

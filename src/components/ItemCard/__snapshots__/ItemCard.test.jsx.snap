@@ -20,7 +20,6 @@ exports[`renders correctly 1`] = `
 
 .c1 {
   width: 3%;
-  padding-top: 2px;
 }
 
 .c1 svg {
@@ -28,6 +27,8 @@ exports[`renders correctly 1`] = `
   -webkit-transition: fill 200ms ease-in-out;
   transition: fill 200ms ease-in-out;
   fill: #333;
+  width: 1.5vw;
+  height: 1.5vw;
 }
 
 .c1 svg:hover,
@@ -85,9 +86,24 @@ exports[`renders correctly 1`] = `
 }
 
 @media (max-width:64em) {
+  .c1 svg {
+    width: 3vw;
+    height: 3vw;
+  }
+}
+
+@media (max-width:37.5em) {
+  .c1 svg {
+    width: 4vw;
+    height: 4vw;
+  }
+}
+
+@media (max-width:64em) {
   .c2 {
     grid-area: title;
     width: 100%;
+    font-weight: 600;
   }
 }
 
