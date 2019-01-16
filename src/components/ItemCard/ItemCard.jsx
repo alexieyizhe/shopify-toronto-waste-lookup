@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { withTheme } from 'styled-components';
+import posed from 'react-pose';
 import Star from 'react-feather/dist/icons/star';
 
 import { ItemsContext } from '../../utils/siteContext';
 
+const CardAnim = {
+  enter: {
+    x: 0,
+    opacity: 1,
+    delay: ({ delayIndex }) => delayIndex * 25
+  },
+  exit: { x: 100, opacity: 0 }
+};
 
 const ComponentContainer = styled.div`
   width: 100%;
@@ -53,10 +62,10 @@ const unescapeHtml = (safe) => {
 }
 
 // Component
-const ItemCard = ({title, body, ith, isFavourite, theme}) => (
+const ItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) => (
   <ItemsContext.Consumer>
     {({items, favs, updateFavs}) => (
-      <ComponentContainer>
+      <ComponentContainer  ref={innerRef}>
         <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}><Star size="1vw" color={isFavourite ? theme.colors.secondary : "grey"}/></FavouriteButton>
         <TitleContainer>{title}</TitleContainer>
         <DescContainer dangerouslySetInnerHTML={{__html: unescapeHtml(body)}}></DescContainer> { /*  TODO: possibly implement sanitizing script that makes sure the only html elements are <ul>, <li>, and <strong> */ }
@@ -64,6 +73,8 @@ const ItemCard = ({title, body, ith, isFavourite, theme}) => (
       </ComponentContainer>
     )}
   </ItemsContext.Consumer>
-);
+));
 
-export default withTheme(ItemCard);
+const ResultCard = posed(withTheme(ItemCard))(CardAnim);
+
+export default ResultCard;

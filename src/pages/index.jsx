@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { PoseGroup } from 'react-pose';
 import "isomorphic-fetch";
 
 import { siteTitle, siteTheme, wasteDataAPIEndPoint } from '../utils/siteData';
@@ -10,7 +11,7 @@ import PageHeader from '../components/PageHeader/PageHeader';
 import SearchBar from '../components/SearchBar/SearchBar';
 import SearchResults from '../components/SearchResults/SearchResults';
 import SearchFavourites from '../components/SearchFavourites/SearchFavourites';
-import ItemCard from '../components/ItemCard/ItemCard';
+import ResultCard from '../components/ItemCard/ItemCard';
 
 // refactor into template later?
 const AppContainer = styled.div`
@@ -91,17 +92,17 @@ class App extends React.Component {
 
 
             <SearchResults>
-              {Array.from(searchResults).map(resultIndex => {
+              {Array.from(searchResults).map((resultIndex, i) => {
                 const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
-                return resultItem ? <ItemCard key={resultIndex} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
+                return resultItem ? <ResultCard delayIndex={i} key={`favs${resultIndex}`} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
               })}
             </SearchResults>
 
 
             <SearchFavourites>
-              {Array.from(currentFavs).map(favIndex => {
+              {Array.from(currentFavs).map((favIndex, i) => {
                 const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
-                return favItem ? <ItemCard key={favIndex} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
+                return favItem ? <ResultCard delayIndex={i} key={`favs${favIndex}`} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
               })}
             </SearchFavourites>
 
