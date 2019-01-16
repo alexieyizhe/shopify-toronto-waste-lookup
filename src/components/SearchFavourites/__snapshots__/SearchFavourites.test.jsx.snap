@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 .c0 {
   height: auto;
-  min-height: 10vh;
+  min-height: 20vh;
   padding: 1vw;
   background-color: #23975e15;
 }
@@ -22,6 +22,22 @@ exports[`renders correctly 1`] = `
     className="c1"
   >
     Favourites
+  </div>
+  <div>
+    test div
+  </div>
+  <a
+    href="test thing thing"
+  >
+    test link
+  </a>
+  <div>
+    <div>
+      wogewog
+      <span>
+        wgwegww????!@$!@
+      </span>
+    </div>
   </div>
 </div>
 `;

@@ -10,7 +10,18 @@ import SearchResults from './SearchResults';
 it('renders correctly', () => {
   const tree = renderer.create(
     <ThemeProvider theme={siteTheme}>
-      <SearchResults />
+      <SearchResults>
+        <div>test div</div>
+        <a href="test thing thing">test link</a>
+        <div>
+          <div>
+            wogewog
+            <span>
+              wgwegww????!@$!@
+            </span>
+          </div>
+        </div>
+      </SearchResults>
     </ThemeProvider>
   ).toJSON();
   expect(tree).toMatchSnapshot();

@@ -10,7 +10,7 @@ import ItemCard from './ItemCard';
 it('renders correctly', () => {
   const tree = renderer.create(
     <ThemeProvider theme={siteTheme}>
-      <ItemCard title="This is a test title" body={["This is a test body"]} />
+      <ItemCard key={4} title="This is a test title" body="&lt;ul&gt; \n &lt;li&gt;Empty and rinse (if necessary and possible) this item before placing it in the&amp;nbsp;&lt;strong&gt;Blue Bin&lt;\/strong&gt;.&lt;\/li&gt; \n&lt;\/ul&gt;" ith={4} isFavourite/>
     </ThemeProvider>
   ).toJSON();
   expect(tree).toMatchSnapshot();

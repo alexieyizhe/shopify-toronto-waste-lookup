@@ -4,6 +4,9 @@ exports[`renders correctly 1`] = `
 .c0 {
   height: 8vh;
   margin: 1vw 0;
+}
+
+.c0 > form {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,40 +33,47 @@ exports[`renders correctly 1`] = `
   width: 8vh;
   height: 8vh;
   background-color: #23975e;
+  border-radius: 5px;
 }
 
 <div
   className="c0"
 >
-  <input
-    className="c1"
-  />
-  <button
-    className="c2"
+  <form
+    onSubmit={[Function]}
   >
-    <svg
-      fill="none"
-      height="2vw"
-      stroke="white"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-      width="2vw"
-      xmlns="http://www.w3.org/2000/svg"
+    <input
+      className="c1"
+      onChange={[Function]}
+      placeholder="Enter a search"
+    />
+    <button
+      className="c2"
     >
-      <circle
-        cx="11"
-        cy="11"
-        r="8"
-      />
-      <line
-        x1="21"
-        x2="16.65"
-        y1="21"
-        y2="16.65"
-      />
-    </svg>
-  </button>
+      <svg
+        fill="none"
+        height="2vw"
+        stroke="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+        width="2vw"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="11"
+          cy="11"
+          r="8"
+        />
+        <line
+          x1="21"
+          x2="16.65"
+          y1="21"
+          y2="16.65"
+        />
+      </svg>
+    </button>
+  </form>
 </div>
 `;

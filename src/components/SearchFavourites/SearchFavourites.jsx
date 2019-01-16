@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { siteSubtitle } from '../../utils/siteData';
+import { siteSubtitle, favsEmptyPlaceholder } from '../../utils/siteData';
 
 const ComponentContainer = styled.div`
   height: auto;
-  min-height: 10vh;
+  min-height: 20vh;
 
   padding: ${props => props.theme.styling.bodySpacing};
 
@@ -21,10 +21,17 @@ const SubHeader = styled.div`
   margin-bottom: 1vw;
 `;
 
+const EmptyDisclaimer = styled.div`
+  width: 100%;
+  padding: ${props => props.theme.styling.bodySpacing};
+  color: grey;
+  text-align: center;
+`;
+
 // Component
 export default ({ children }) => (
   <ComponentContainer>
     <SubHeader>{siteSubtitle}</SubHeader>
-    {children}
+    {children.length > 0 ? children : <EmptyDisclaimer><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
   </ComponentContainer>
 );
