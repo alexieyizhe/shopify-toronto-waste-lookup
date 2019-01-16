@@ -3,27 +3,30 @@ import styled from 'styled-components';
 
 import { siteSubtitle, favsEmptyPlaceholder } from '../../utils/siteData';
 
+
 const ComponentContainer = styled.div`
   height: auto;
   min-height: 20vh;
 
-  padding: ${props => props.theme.styling.bodySpacing};
-
+  margin: 0; // margin allows for margin collapsing
+  padding: 2vh;
   background-color: ${props => `${props.theme.colors.secondary}15`}; // 8 digit hex code includes alpha value
 `;
 
 
 const SubHeader = styled.div`
-  font-weight: 600;
-  font-size: 2vw;
+  font-size: 1.5em;
+  font-weight: 700;
+
   color: ${props => props.theme.colors.secondary};
 
-  margin-bottom: 1vw;
+  margin-bottom: 3vh;
 `;
 
 const EmptyDisclaimer = styled.div`
-  width: 100%;
-  padding: ${props => props.theme.styling.bodySpacing};
+  width: 75%;
+  margin: 5vh auto;
+
   color: grey;
   text-align: center;
 `;

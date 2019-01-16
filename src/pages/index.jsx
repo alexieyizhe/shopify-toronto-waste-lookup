@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import "isomorphic-fetch";
 
 import { siteTitle, siteTheme, wasteDataAPIEndPoint } from '../utils/siteData';
-import { GlobalStyle } from '../utils/siteTools';
+import { GlobalStyle, mediaSize } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
 import HelmetHead from '../components/HelmetHead/HelmetHead';
@@ -17,6 +17,16 @@ import ItemCard from '../components/ItemCard/ItemCard';
 const AppContainer = styled.div`
   width: 100vw;
   height: auto;
+
+  font-size: 1.5vw;
+
+  ${mediaSize.tablet`
+    font-size: 3vw;
+  `}
+
+  ${mediaSize.mobile`
+    font-size: 5vw;
+  `}
 `;
 
 
