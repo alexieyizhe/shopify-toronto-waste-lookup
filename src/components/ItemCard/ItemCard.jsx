@@ -3,6 +3,7 @@ import styled, { withTheme } from 'styled-components';
 import posed from 'react-pose';
 
 import { ItemsContext } from '../../utils/siteContext';
+import { mediaSize } from '../../utils/siteTools';
 
 const CardAnim = {
   enter: {
@@ -16,23 +17,43 @@ const CardAnim = {
 const ComponentContainer = styled.div`
   width: 100%;
   height: auto;
-  padding-bottom: 2vw;
+  margin-bottom: 2vw;
 
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  font-size: 1.5vw;
 
-  ${'' /* display: grid;
-  grid-template-columns: 5% 35% 54%;
-  grid-template-rows: auto;
-  grid-column-gap: 2%;
-  grid-template-areas: 'fav title desc'; */}
+  ${mediaSize.tablet`
+    width: 90%;
+    padding: 5vw 2vw;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 7px 40px;
+    margin: 0 auto 5vw auto;
+
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'fav title'
+      'desc desc';
+    justify-items: center;
+    align-items: center;
+  `}
 `;
 
 const FavouriteButton = styled.div`
-  grid-area: fav;
   width: 3%;
+  padding-top: 2px; // compensate for icon being slightly above center
+
+  ${mediaSize.tablet`
+    grid-area: fav;
+    width: auto;
+  `}
+
+  ${mediaSize.mobile`
+    align-self: start;
+    padding-top: 0;
+  `}
+  
 
   & svg {
     cursor: pointer;
@@ -46,13 +67,16 @@ const FavouriteButton = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  grid-area: title;
   color: ${props => props.theme.colors.offBlack};
   width: 45%;
+
+  ${mediaSize.tablet`
+    grid-area: title;
+    width: 100%;
+  `}
 `;
 
 const DescContainer = styled.div`
-  grid-area: desc;
   color: ${props => props.theme.colors.offBlack};
   width: 50%;
 
@@ -60,6 +84,21 @@ const DescContainer = styled.div`
     margin: 0;
     padding: 0;
   }
+
+  ${mediaSize.tablet`
+    grid-area: desc;
+    justify-self: center;
+    width: 95%;
+
+    & > ul > li {
+      list-style-type: none;
+      margin-top: 2vw;
+    }
+  `}
+
+  ${mediaSize.mobile`
+
+  `}
 `;
 
 // HTML needs to be unescaped, otherwise React treats it as regular ol' text

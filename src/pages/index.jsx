@@ -4,9 +4,10 @@ import { PoseGroup } from 'react-pose';
 import "isomorphic-fetch";
 
 import { siteTitle, siteTheme, wasteDataAPIEndPoint } from '../utils/siteData';
-import { GlobalStyle } from '../utils/siteTools';
+import { GlobalStyle, mediaSize } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
+import HelmetHead from '../components/HelmetHead/HelmetHead';
 import PageHeader from '../components/PageHeader/PageHeader';
 import SearchBar from '../components/SearchBar/SearchBar';
 import SearchResults from '../components/SearchResults/SearchResults';
@@ -17,6 +18,16 @@ import ResultCard from '../components/ItemCard/ItemCard';
 const AppContainer = styled.div`
   width: 100vw;
   height: auto;
+
+  font-size: 1.5vw;
+
+  ${mediaSize.tablet`
+    font-size: 3vw;
+  `}
+
+  ${mediaSize.mobile`
+    font-size: 5vw;
+  `}
 `;
 
 
@@ -39,18 +50,13 @@ class App extends React.Component {
     }
 
     this.startSearch = () =>{
-      let newSearchResults = new Set(); // eslint-disable-line (newSearchResults is manipulated in the next few lines)
-      this.wasteItems.map((item, i) => {
-        const match = (item.keywords.search(this.state.searchQuery) >= 0);
+      const { searchQuery } = this.state;
+      let newSearchResults = new Set(); // eslint-disable-line
+
+      this.wasteItems.forEach((item, i) => {
+        const match = (item.keywords.search(searchQuery) >= 0);
         if(match) newSearchResults.add(i);
       });
-
-      // TESTING ONLY
-      // const fuse = new Fuse(this.wasteItems, searchOptions);
-      // const searchRes = fuse.search(this.state.searchQuery);
-      // const testSearchArray = Array.from({length: 6}, () => Math.floor(Math.random() * 50));
-      // TESTING ONLY
-
       this.setState({ searchResults: newSearchResults})
     }
 
@@ -82,13 +88,14 @@ class App extends React.Component {
     const { searchResults, currentFavs } = this.state;
     return (
       <ThemeProvider theme={siteTheme}>
-        <AppContainer>
+        <>
+          <HelmetHead />
           <GlobalStyle />
+          <AppContainer>
+            <PageHeader title={siteTitle} />
+            <ItemsContext.Provider value={this.state}>
 
-          <PageHeader title={siteTitle} />
-          <ItemsContext.Provider value={this.state}>
-
-            <SearchBar />
+              <SearchBar />
 
 
             <SearchResults>
@@ -105,9 +112,11 @@ class App extends React.Component {
                 return favItem ? <ResultCard delayIndex={i} key={`favs${favIndex}`} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
               })}
             </SearchFavourites>
+        
 
-          </ItemsContext.Provider>
-        </AppContainer>
+            </ItemsContext.Provider>
+          </AppContainer>
+        </>
       </ThemeProvider>
     );
   }

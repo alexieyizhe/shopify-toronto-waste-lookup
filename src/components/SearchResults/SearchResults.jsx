@@ -9,8 +9,9 @@ const ComponentContainer = styled.div`
   height: auto;
   min-height: 40vh;
 
-  margin: ${props => props.theme.styling.bodySpacing}; // margin allows for margin collapsing
+  margin: 3vh ${props => props.theme.styling.bodySpacing}; // margin allows for margin collapsing
 `;
+
 
 const DisclaimerAnim = {
   enter: {
@@ -20,9 +21,11 @@ const DisclaimerAnim = {
   exit: { opacity: 0 }
 }
 
+        
 const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
-  width: 100%;
-  padding: ${props => props.theme.styling.bodySpacing};
+  width: 75%;
+  margin: 5vh auto; // collapses into container margin when EmptyDisclaimer is present
+
   color: grey;
   text-align: center;
 `;
