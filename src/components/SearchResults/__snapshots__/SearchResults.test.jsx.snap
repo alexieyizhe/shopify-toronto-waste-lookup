@@ -10,15 +10,20 @@ exports[`renders correctly 1`] = `
 <div
   className="c0"
 >
-  <div>
+  <div
+    _pose="enter"
+  >
     test div
   </div>
   <a
+    _pose="enter"
     href="test thing thing"
   >
     test link
   </a>
-  <div>
+  <div
+    _pose="enter"
+  >
     <div>
       wogewog
       <span>

@@ -11,9 +11,9 @@ it('renders correctly', () => {
   const tree = renderer.create(
     <ThemeProvider theme={siteTheme}>
       <SearchResults>
-        <div>test div</div>
-        <a href="test thing thing">test link</a>
-        <div>
+        <div key="testDiv">test div</div>
+        <a  key="testLinkA" href="test thing thing">test link</a>
+        <div key="testDiv2">
           <div>
             wogewog
             <span>

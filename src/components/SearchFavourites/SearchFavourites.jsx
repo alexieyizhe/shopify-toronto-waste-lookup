@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import posed, { PoseGroup } from 'react-pose';
 
 import { siteSubtitle, favsEmptyPlaceholder } from '../../utils/siteData';
 
@@ -23,7 +24,17 @@ const SubHeader = styled.div`
   margin-bottom: 3vh;
 `;
 
-const EmptyDisclaimer = styled.div`
+
+const DisclaimerAnim = {
+  enter: {
+    opacity: 1,
+    delay: 450
+  },
+  exit: { opacity: 0 }
+}
+
+        
+const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
   width: 75%;
   margin: 5vh auto;
 
@@ -35,6 +46,8 @@ const EmptyDisclaimer = styled.div`
 export default ({ children }) => (
   <ComponentContainer>
     <SubHeader>{siteSubtitle}</SubHeader>
-    {children.length > 0 ? children : <EmptyDisclaimer><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
+    <PoseGroup>
+      {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
+    </PoseGroup>
   </ComponentContainer>
 );

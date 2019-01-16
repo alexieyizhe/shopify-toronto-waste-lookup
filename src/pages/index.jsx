@@ -98,19 +98,20 @@ class App extends React.Component {
 
 
               <SearchResults>
-                {Array.from(searchResults).map(resultIndex => {
+                {Array.from(searchResults).map((resultIndex, i) => {
                   const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
-                  return resultItem ? <ItemCard key={resultIndex} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
+                  return resultItem ? <ItemCard delayIndex={i} key={`favs${resultIndex}`} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
                 })}
               </SearchResults>
 
 
               <SearchFavourites>
-                {Array.from(currentFavs).map(favIndex => {
+                {Array.from(currentFavs).map((favIndex, i) => {
                   const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
-                  return favItem ? <ItemCard key={favIndex} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
-                })}
-              </SearchFavourites>
+                  return favItem ? <ItemCard delayIndex={i} key={`favs${favIndex}`} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
+              })}
+            </SearchFavourites>
+
 
             </ItemsContext.Provider>
           </AppContainer>
