@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+.c0 {
+  width: 100%;
+  height: auto;
+  padding-bottom: 2vw;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  font-size: 1.5vw;
+}
+
+.c1 {
+  grid-area: fav;
+  width: 3%;
+}
+
+.c2 {
+  grid-area: title;
+  color: #333;
+  width: 45%;
+}
+
+.c3 {
+  grid-area: desc;
+  color: #333;
+  width: 50%;
+}
+
+.c3 > ul {
+  margin: 0;
+  padding: 0;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+  >
+    <svg
+      fill="none"
+      height="1vw"
+      stroke="#333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="1vw"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <polygon
+        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+      />
+    </svg>
+  </div>
+  <div
+    className="c2"
+  >
+    This is a test title
+  </div>
+  <div
+    className="c3"
+  >
+    <ul>
+      <li
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "This is a test body",
+          }
+        }
+      />
+       
+      <li
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "This is a test body",
+          }
+        }
+      />
+       
+      <li
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "This is a test body",
+          }
+        }
+      />
+       
+    </ul>
+  </div>
+</div>
+`;

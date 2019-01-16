@@ -25,10 +25,9 @@
     "build": "node_modules/.bin/gatsby build",
     "serve": "node_modules/.bin/gatsby serve",
     "lint": "node_modules/.bin/eslint src",
-    "test": "jest --coverage && cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "jest --coverage",
     "test:update": "jest --updateSnapshot",
-    "test:nocov": "jest",
-    "test:nocoveralls": "jest --coverage",
+    "test:cov": "jest --coverage && cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test:watch": "jest --watch",
     "prettier": "prettier --single-quote --write '{./,__{tests,mocks}__}/**/*.+(js|jsx)'",
     "prettier:check": "prettier --single-quote --list-different '{./,__{tests,mocks}__}/**/*.+(js|jsx)'"
