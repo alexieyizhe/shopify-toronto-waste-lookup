@@ -23,6 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    /* CONTEXT UPDATING FUNCTIONS */
     this.updateFavs = (wasteItemIndex, remove = false) => {
       this.setState(prevState => {
         if(remove) prevState.currentFavs.delete(wasteItemIndex);
@@ -37,25 +38,34 @@ class App extends React.Component {
     }
 
     this.startSearch = () =>{
-      console.log(`searchQuery is ${this.state.searchQuery}`);
-      const testSearchArray = Array.from({length: 6}, () => Math.floor(Math.random() * 50));
-      this.setState({ searchResults: new Set(testSearchArray)})
+      let newSearchResults = new Set(); // eslint-disable-line (newSearchResults is manipulated in the next few lines)
+      this.wasteItems.map((item, i) => {
+        const match = (item.keywords.search(this.state.searchQuery) >= 0);
+        if(match) newSearchResults.add(i);
+      });
+
+      // TESTING ONLY
+      // const fuse = new Fuse(this.wasteItems, searchOptions);
+      // const searchRes = fuse.search(this.state.searchQuery);
+      // const testSearchArray = Array.from({length: 6}, () => Math.floor(Math.random() * 50));
+      // TESTING ONLY
+
+      this.setState({ searchResults: newSearchResults})
     }
 
-
+    /* FETCHING JSON DATA FROM API */
     fetch(wasteDataAPIEndPoint).then(response => {
       return response.json();
+
     }).then(wasteItemData => {
       this.wasteItems = wasteItemData;
 
-      // FOR TESTING ONLY TODO: REMOVE THIS
-      this.setState({searchResults: new Set([0, 2, 23])});
-      // FOR TESTING ONLY
-
     }).catch(err => {
       // TODO: add error handling, possible in state to display an error when API is down
+
     });
 
+    /* SET INITIAL STATE */
     this.state = {
       searchQuery: '',
       searchResults: new Set(),
@@ -65,6 +75,7 @@ class App extends React.Component {
       startSearch: this.startSearch // eslint-disable-line
     }
   }
+
 
   render() {
     const { searchResults, currentFavs } = this.state;
@@ -87,9 +98,8 @@ class App extends React.Component {
             </SearchResults>
 
 
-
             <SearchFavourites>
-              {currentFavs.size > 0 && Array.from(currentFavs).map(favIndex => {
+              {Array.from(currentFavs).map(favIndex => {
                 const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
                 return favItem ? <ItemCard key={favIndex} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
               })}

@@ -28,3 +28,4 @@ Fetch API for querying the Toronto Waste API
 1. Tests
 2. Mobile responsive design
 3. Use https://shopify.github.io/draggable/ to allow for moving each search result? Reorder favourites?
+4. Fuzzy search matching on keywords?

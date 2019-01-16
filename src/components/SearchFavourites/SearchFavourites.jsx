@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { siteSubtitle } from '../../utils/siteData';
+import { siteSubtitle, favsEmptyPlaceholder } from '../../utils/siteData';
 
 const ComponentContainer = styled.div`
   height: auto;
-  min-height: 10vh;
+  min-height: 20vh;
 
   padding: ${props => props.theme.styling.bodySpacing};
 
@@ -32,6 +32,6 @@ const EmptyDisclaimer = styled.div`
 export default ({ children }) => (
   <ComponentContainer>
     <SubHeader>{siteSubtitle}</SubHeader>
-    {children.length > 0 ? children : <EmptyDisclaimer><span>You have no favourites. Try adding some with the star icon next to the item name!</span></EmptyDisclaimer>}
+    {children.length > 0 ? children : <EmptyDisclaimer><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
   </ComponentContainer>
 );

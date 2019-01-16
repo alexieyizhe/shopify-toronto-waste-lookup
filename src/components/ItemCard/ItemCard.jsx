@@ -4,6 +4,7 @@ import Star from 'react-feather/dist/icons/star';
 
 import { ItemsContext } from '../../utils/siteContext';
 
+
 const ComponentContainer = styled.div`
   width: 100%;
   height: auto;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Search from 'react-feather/dist/icons/search';
 import { ItemsContext } from '../../utils/siteContext';
 
+import { searchBarEmptyPlaceholder } from '../../utils/siteData';
 
 
 const ComponentContainer = styled.div`
@@ -40,7 +41,7 @@ export default () => (
     {({ updateSearch, startSearch }) => (
       <ComponentContainer>
         <form onSubmit={(e) => { e.preventDefault(); startSearch(); }} >
-          <SearchInputBox onChange={(e) => updateSearch(e.target.value)} />
+          <SearchInputBox placeholder={searchBarEmptyPlaceholder} onChange={(e) => updateSearch(e.target.value)} />
           <SearchButton><Search color="white" size="2vw" /></SearchButton>
         </form>
       </ComponentContainer>
