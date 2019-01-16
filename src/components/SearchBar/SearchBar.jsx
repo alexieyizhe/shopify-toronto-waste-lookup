@@ -7,33 +7,34 @@ import { searchBarEmptyPlaceholder } from '../../utils/siteData';
 
 
 const ComponentContainer = styled.div`
-  height: 8vh;
+  height: 4vw;
   margin: ${props => props.theme.styling.bodySpacing} 0; // margin allows for margin collapsing
 
   & > form {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    height: 4vw;
   }
 `;
 
 const SearchInputBox = styled.input`
-  width: 90%;
+  width: 93vw;
 
-  padding: 1vw;
   font-size: 2vw;
 
   border: none; // css reset for default input styling
   border-radius: 5px;
-  border: 1px solid ${props => props.theme.colors.offBlack};
+  border: 1px solid grey;
 `;
 
 const SearchButton = styled.button`
-  width: 8vh;
-  height: 8vh;
+  width: 4vw;
 
   background-color: ${props => props.theme.colors.secondary};
 
+  border: none;
   border-radius: 5px;
 `;
 

@@ -13,7 +13,6 @@ const ComponentContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  font-size: 1.5vw;
 
   ${'' /* display: grid;
   grid-template-columns: 5% 35% 54%;
