@@ -33,6 +33,8 @@ const SearchButton = styled.button`
   height: 8vh;
 
   background-color: ${props => props.theme.colors.secondary};
+
+  border-radius: 5px;
 `;
 
 // Component
