@@ -43,20 +43,23 @@ const DescContainer = styled.div`
   }
 `;
 
+const unescapeHtml = (safe) => {
+    return safe.replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'");
+}
+
 // Component
 const ItemCard = ({title, body, ith, isFavourite, theme}) => (
   <ItemsContext.Consumer>
     {({items, favs, updateFavs}) => (
       <ComponentContainer>
-        <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}><Star size="1vw" color={isFavourite ? theme.colors.secondary : theme.colors.offBlack}/></FavouriteButton>
+        <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}><Star size="1vw" color={isFavourite ? theme.colors.secondary : "grey"}/></FavouriteButton>
         <TitleContainer>{title}</TitleContainer>
-        <DescContainer>
-          <ul>
-            <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
-            <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
-            <li dangerouslySetInnerHTML={{__html: body[0]}} /> { /*  TODO: refactor this */ }
-          </ul>
-        </DescContainer>
+        <DescContainer dangerouslySetInnerHTML={{__html: unescapeHtml(body)}}></DescContainer> { /*  TODO: possibly implement sanitizing script that makes sure the only html elements are <ul>, <li>, and <strong> */ }
+        { /*  ^^ Not really sure what the best way to sanitize this and make it safe without expending lots of effort with parsing the HTML body it returns, but the API is trusted so this should be safe */ }
       </ComponentContainer>
     )}
   </ItemsContext.Consumer>

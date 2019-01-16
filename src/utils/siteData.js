@@ -20,3 +20,5 @@ export const siteTitle = 'Toronto Waste Lookup';
 export const searchBarPlaceholder = 'Enter a search';
 
 export const siteSubtitle = 'Favourites';
+
+export const wasteDataAPIEndPoint = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';

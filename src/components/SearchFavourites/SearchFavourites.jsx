@@ -21,10 +21,17 @@ const SubHeader = styled.div`
   margin-bottom: 1vw;
 `;
 
+const EmptyDisclaimer = styled.div`
+  width: 100%;
+  padding: ${props => props.theme.styling.bodySpacing};
+  color: grey;
+  text-align: center;
+`;
+
 // Component
 export default ({ children }) => (
   <ComponentContainer>
     <SubHeader>{siteSubtitle}</SubHeader>
-    {children}
+    {children.length > 0 ? children : <EmptyDisclaimer><span>You have no favourites. Try adding some with the star icon next to the item name!</span></EmptyDisclaimer>}
   </ComponentContainer>
 );
