@@ -42,7 +42,6 @@ const ComponentContainer = styled.div`
 
 const FavouriteButton = styled.div`
   width: 3%;
-  padding-top: 2px; // compensate for icon being slightly above center
 
   ${mediaSize.tablet`
     grid-area: fav;
@@ -60,9 +59,23 @@ const FavouriteButton = styled.div`
 
     transition: fill 200ms ease-in-out;
     fill: ${props => props.theme.colors.offBlack};
+
     &:hover, &.favourited {
       fill: ${props => props.theme.colors.secondary};
     }
+
+    width: 1.5vw;
+    height: 1.5vw;
+
+    ${mediaSize.tablet`
+      width: 3vw;
+      height: 3vw;
+    `}
+
+    ${mediaSize.mobile`
+      width: 4vw;
+      height: 4vw;
+    `}
   }
 `;
 
@@ -73,6 +86,8 @@ const TitleContainer = styled.div`
   ${mediaSize.tablet`
     grid-area: title;
     width: 100%;
+
+    font-weight: 600; 
   `}
 `;
 
@@ -103,13 +118,13 @@ const DescContainer = styled.div`
 
 // HTML needs to be unescaped, otherwise React treats it as regular ol' text
 // Code source: https://stackoverflow.com/questions/22279231/using-js-jquery-how-can-i-unescape-html-and-put-quotes-back-in-the-str
-const unescapeHtml = (safe) => {
-    return safe.replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/&#039;/g, "'");
-}
+const unescapeHtml = (safe) => (
+  safe.replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'")
+);
 
 // Component
 export const NoAnimItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) => (
