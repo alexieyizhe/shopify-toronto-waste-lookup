@@ -24,15 +24,20 @@ exports[`renders correctly 1`] = `
   >
     Favourites
   </div>
-  <div>
+  <div
+    _pose="enter"
+  >
     test div
   </div>
   <a
+    _pose="enter"
     href="test thing thing"
   >
     test link
   </a>
-  <div>
+  <div
+    _pose="enter"
+  >
     <div>
       wogewog
       <span>

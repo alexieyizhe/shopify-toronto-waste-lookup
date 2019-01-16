@@ -53,7 +53,7 @@ const FavouriteButton = styled.div`
     align-self: start;
     padding-top: 0;
   `}
-  
+
 
   & svg {
     cursor: pointer;
@@ -112,10 +112,10 @@ const unescapeHtml = (safe) => {
 }
 
 // Component
-const ItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) => (
+export const NoAnimItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) => (
   <ItemsContext.Consumer>
     {({items, favs, updateFavs}) => (
-      <ComponentContainer  ref={innerRef}>
+      <ComponentContainer ref={innerRef}>
         <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}>
           {/* Icon source: https://www.s-ings.com/typicons/ */}
           <svg width="1.5vw" height="1.5vw" baseProfile="tiny" version="1.2" viewBox="0 0 24 24" className={isFavourite ? 'favourited' : ''}>
@@ -130,6 +130,4 @@ const ItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) =
   </ItemsContext.Consumer>
 ));
 
-const ResultCard = posed(withTheme(ItemCard))(CardAnim);
-
-export default ResultCard;
+export default posed(withTheme(NoAnimItemCard))(CardAnim);
