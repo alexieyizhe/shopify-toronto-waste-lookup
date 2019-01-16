@@ -4,7 +4,7 @@ exports[`renders correctly 1`] = `
 .c0 {
   height: auto;
   min-height: 40vh;
-  margin: 1vw;
+  margin: 3vh 1vw;
 }
 
 <div
