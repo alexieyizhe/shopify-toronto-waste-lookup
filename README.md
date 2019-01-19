@@ -14,6 +14,7 @@ Along with the challenge specs, I decided to add some extras to those that were 
  - 💾 Caching using local storage on device. It saves previous favourites, search queries, results. It also saves all waste items from the last time it checked the database to reduce amount of API calls, and refreshes every 24 hours.
  - 🌠 Animations to improve the user experience for items, favouriting, searching, etc
  - 📸 Snapshot tests using Jest and react-test-renderer (more tests would probably be added if I had some extra time)
+ - 💡 Basic typechecking with React PropTypes
  - 💄 Small stylistic improvements like a favicon, status messages, messages telling the user their favs are empty, etc
  - ✨ Consistent themes and animations using a predefined data file, as well as styled-components and its ThemeProvider tool  
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import { DraggableContainer } from '@wuweiweiwu/react-shopify-draggable';
@@ -48,18 +49,27 @@ const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
 `;
 
 // Component
-export default ({ children }) => {
-  return (
-    <ComponentContainer>
-      <SubHeader>{siteSubtitle}</SubHeader>
-      {
-        typeof window !== 'undefined' && DraggableContainer && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
-        <DraggableContainer type="sortable">
-          <PoseGroup>
-            {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
-          </PoseGroup>
-        </DraggableContainer>
-      }
-    </ComponentContainer>
-  );
-}
+const SearchFavs = ({ children }) => (
+  <ComponentContainer>
+    <SubHeader>{siteSubtitle}</SubHeader>
+    {
+      typeof window !== 'undefined' && DraggableContainer && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
+      <DraggableContainer type="sortable">
+        <PoseGroup>
+          {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
+        </PoseGroup>
+      </DraggableContainer>
+    }
+  </ComponentContainer>
+);
+
+
+SearchFavs.propTypes = {
+  children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]).isRequired
+};
+
+
+export default SearchFavs;

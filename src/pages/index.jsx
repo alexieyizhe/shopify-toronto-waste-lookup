@@ -60,7 +60,7 @@ class App extends React.Component {
         let newSearchResults = new Set(); // eslint-disable-line
 
         this.wasteItems.forEach((item, i) => {
-          const match = (item.keywords.search(searchQuery) >= 0);
+          const match = (item.keywords.indexOf(searchQuery) >= 0);
           if(match) newSearchResults.add(i);
         });
         this.setState({ searchResults: newSearchResults, appStatus: FetchStateEnum.SEARCHING });

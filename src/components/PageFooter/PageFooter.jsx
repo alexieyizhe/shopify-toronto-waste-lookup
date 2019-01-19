@@ -28,7 +28,7 @@ const ComponentContainer = styled.div`
 // Component
 export default () => (
   <ComponentContainer>
-    <div className="pageCredits"> {/* eslint-disable-line */}
+    <div className="pageCredits">{/* eslint-disable-line */}
       Created with ❤️  by <a href="https://github.com/alexieyizhe" target="_blank" rel="noopener noreferrer">Alex Yizhe Xie</a> for the Shopify Front End Challenge (Summer 2019)
     </div>
   </ComponentContainer>
