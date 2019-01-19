@@ -36,6 +36,7 @@ export default ({ children }) => (
   <ComponentContainer>
     <ItemsContext.Consumer>
       {({ appStatus }) => {
+        console.log(appStatus);
         let showDisclaimer = true;
         let disclaimerContents;
         switch(appStatus) {
@@ -46,6 +47,7 @@ export default ({ children }) => (
             disclaimerContents = searchResultsPlaceholders.waiting;
             break;
           case FetchStateEnum.READY:
+            showDisclaimer = children.length === 0;
             disclaimerContents = searchResultsPlaceholders.ready;
             break;
           case FetchStateEnum.SEARCHING:

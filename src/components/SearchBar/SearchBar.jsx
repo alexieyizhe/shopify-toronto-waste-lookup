@@ -51,10 +51,10 @@ const SearchButton = styled.button`
 // Component
 export default () => (
   <ItemsContext.Consumer>
-    {({ updateSearch, startSearch }) => (
+    {({ searchQuery, updateSearch, startSearch }) => (
       <ComponentContainer>
         <form onSubmit={(e) => { e.preventDefault(); startSearch(); }} >
-          <SearchInputBox placeholder={searchBarEmptyPlaceholder} onChange={(e) => updateSearch(e.target.value)} />
+          <SearchInputBox placeholder={searchBarEmptyPlaceholder} value={searchQuery} onChange={(e) => updateSearch(e.target.value)} />
           <SearchButton><Search color="white" size="4vh" /></SearchButton>
         </form>
       </ComponentContainer>
