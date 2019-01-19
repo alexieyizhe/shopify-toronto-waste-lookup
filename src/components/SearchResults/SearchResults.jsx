@@ -46,7 +46,6 @@ export default ({ children }) => (
   <ComponentContainer>
     <ItemsContext.Consumer>
       {({ appStatus }) => {
-        console.log(appStatus);
         let showDisclaimer = true;
         let disclaimerContents;
         switch(appStatus) {

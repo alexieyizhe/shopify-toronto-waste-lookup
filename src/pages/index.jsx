@@ -106,7 +106,7 @@ class App extends React.Component {
   /* INITIALIZE THE DATA REQUIRED FOR THE APP TO FUNCTION */
   initAppData() {
     /* FETCH DATA FROM LOCALSTORAGE */
-    this.loadStatusFromStorage();
+    const appReady = this.loadStatusFromStorage();
 
     // fetch the data
     let lastAPICall = localStorage.getItem('lastAPICall');
@@ -118,6 +118,8 @@ class App extends React.Component {
     } catch(e) {
       console.log(e);
     }
+
+    if(!appReady) this.fetchWasteItemData();
 
   }
 
@@ -176,7 +178,11 @@ class App extends React.Component {
       }
     });
 
-    this.setState({ appStatus: FetchStateEnum.READY });
+    if(this.wasteItems) {
+      this.setState({ appStatus: FetchStateEnum.READY });
+      return true;
+    }
+    return false;
   }
 
 
@@ -221,19 +227,3 @@ class App extends React.Component {
 
 
 export default App;
-
-
-// export const pageQuery = graphql`
-//   query contentQuery {
-//     allContentJson {
-//       edges {
-//         node {
-//           index {
-//             title
-//             subtitle
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
