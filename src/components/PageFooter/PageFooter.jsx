@@ -1,44 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from "prop-types";
-
 
 const ComponentContainer = styled.div`
   background-color: grey;
   width: 100%;
-  height: 15vh;
+  height: auto;
 
-  margin-top: 2vh;
+  padding: 1.5vh 0;
 
   background-image: ${props => `linear-gradient(to right, ${props.theme.colors.primary}, ${props.theme.colors.secondary})`};
 
   display: flex;
 
-  & > div.pageTitle {
+  & > div.pageCredits {
     margin: auto;
 
     color: white;
-    font-size: 1.5em;
-    font-weight: 600;
+    font-size: 0.6em;
+    text-align: center;
+
+    & > a {
+      color: white;
+    }
   }
 `;
 
 // Component
-const Header = ({ title }) => (
+export default () => (
   <ComponentContainer>
-    <div className="pageTitle">
-      {title}
+    <div className="pageCredits"> {/* eslint-disable-line */}
+      Created with ❤️  by <a href="https://github.com/alexieyizhe" target="_blank" rel="noopener noreferrer">Alex Yizhe Xie</a> for the Shopify Front End Challenge (Summer 2019)
     </div>
   </ComponentContainer>
 );
-
-
-Header.propTypes = {
-  title: PropTypes.string
-};
-
-Header.defaultProps = {
-  title: 'This is a default title'
-};
-
-export default Header;

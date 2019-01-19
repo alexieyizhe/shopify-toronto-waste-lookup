@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+// Default context seed data
 export const wasteItems = [
   {
     title: 'Garbage (wrapping and tying)',
@@ -23,6 +25,8 @@ export const wasteItems = [
 
 export const ItemsContext = React.createContext({
   items: wasteItems,
-  favs: new Set(), // TODO: make this into a set
-  updateFavs: () => {}
+  favs: new Set(),
+  updateFavs: () => {},
+  updateSearch: () => {},
+  startSearch: () => {}
 });
