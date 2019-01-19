@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
+import { DraggableContainer } from '@wuweiweiwu/react-shopify-draggable';
 
 import { searchResultsPlaceholders, FetchStateEnum } from '../../utils/siteData';
 import { ItemsContext } from '../../utils/siteContext';
@@ -11,6 +12,15 @@ const ComponentContainer = styled.div`
   min-height: 40vh;
 
   margin: 3vh ${props => props.theme.styling.bodySpacing}; // margin allows for margin collapsing
+
+  background-color: white;
+
+  & div.draggableItemContainer {
+    background-color: white; // 8 digit hex code includes alpha value
+  }
+  & *:focus {
+    outline: none;
+  }
 `;
 
 
@@ -58,9 +68,11 @@ export default ({ children }) => (
             disclaimerContents = {text: 'This is a test disclaimer', color: 'grey'};
         }
         return (
-          <PoseGroup>
-            {showDisclaimer ? <EmptyDisclaimer key="emptyDisclaimerSearch" color={disclaimerContents.color}><span>{disclaimerContents.text}</span></EmptyDisclaimer> : children}
-          </PoseGroup>
+          <DraggableContainer type="sortable">
+            <PoseGroup>
+              {showDisclaimer ? <EmptyDisclaimer key="emptyDisclaimerSearch" color={disclaimerContents.color}><span>{disclaimerContents.text}</span></EmptyDisclaimer> : children}
+            </PoseGroup>
+          </DraggableContainer>
         );
       }}
     </ItemsContext.Consumer>

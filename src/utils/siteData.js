@@ -4,6 +4,7 @@ export const siteTheme = {
   colors: {
     primary: '#1d5a94',
     secondary: '#23975e',
+    secondaryBg: '#b5d2c4',
 
     warning: '#F4A867',
     error: '#F07285',

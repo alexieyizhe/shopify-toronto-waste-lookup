@@ -89,7 +89,7 @@ class App extends React.Component {
     // when user leaves/refreshes the page
     window.addEventListener(
       "beforeunload",
-      () => this.saveStatusToStorage()
+      () => this.saveStatusToStorage() // TODO: replace with this.saveStateToLocalStorage.bind(this)
     );
   }
 
