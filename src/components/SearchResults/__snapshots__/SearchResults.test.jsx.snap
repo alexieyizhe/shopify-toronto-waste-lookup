@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+.c0 {
+  height: auto;
+  min-height: 40vh;
+  margin: 3vh 1vw;
+}
+
+<div
+  className="c0"
+>
+  <div
+    _pose="enter"
+  >
+    test div
+  </div>
+  <a
+    _pose="enter"
+    href="test thing thing"
+  >
+    test link
+  </a>
+  <div
+    _pose="enter"
+  >
+    <div>
+      wogewog
+      <span>
+        wgwegww????!@$!@
+      </span>
+    </div>
+  </div>
+</div>
+`;

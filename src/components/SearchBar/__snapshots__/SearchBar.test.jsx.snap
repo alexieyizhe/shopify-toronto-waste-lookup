@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+.c0 {
+  height: 7vh;
+  margin: 2vh 0;
+}
+
+.c0 > form {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.c1 {
+  width: 90%;
+  font-size: 1em;
+  padding: 1vh;
+  border: none;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.c2 {
+  width: 7vh;
+  background-color: #23975e;
+  border: none;
+  border-radius: 5px;
+}
+
+@media (max-width:64em) {
+  .c1 {
+    width: 80%;
+  }
+}
+
+@media (max-width:37.5em) {
+  .c1 {
+    width: 70%;
+  }
+}
+
+<div
+  className="c0"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <input
+      className="c1"
+      onChange={[Function]}
+      placeholder="Enter a search"
+    />
+    <button
+      className="c2"
+    >
+      <svg
+        fill="none"
+        height="4vh"
+        stroke="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+        width="4vh"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="11"
+          cy="11"
+          r="8"
+        />
+        <line
+          x1="21"
+          x2="16.65"
+          y1="21"
+          y2="16.65"
+        />
+      </svg>
+    </button>
+  </form>
+</div>
+`;

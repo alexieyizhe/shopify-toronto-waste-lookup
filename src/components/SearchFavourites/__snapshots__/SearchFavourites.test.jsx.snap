@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+.c0 {
+  height: auto;
+  min-height: 20vh;
+  margin: 0;
+  padding: 2vh;
+  background-color: #23975e15;
+}
+
+.c0 *:focus {
+  outline: none;
+}
+
+.c1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #23975e;
+  margin-bottom: 3vh;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    Favourites
+  </div>
+  <div
+    className=""
+  >
+    <div
+      _pose="enter"
+    >
+      test div
+    </div>
+    <a
+      _pose="enter"
+      href="test thing thing"
+    >
+      test link
+    </a>
+    <div
+      _pose="enter"
+    >
+      <div>
+        wogewog
+        <span>
+          wgwegww????!@$!@
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

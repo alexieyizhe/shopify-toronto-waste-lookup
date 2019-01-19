@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+.c0 {
+  background-color: grey;
+  width: 100%;
+  height: auto;
+  padding: 1.5vh 0;
+  background-image: linear-gradient(to right,#1d5a94,#23975e);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 > div.pageCredits {
+  margin: auto;
+  color: white;
+  font-size: 0.6em;
+  text-align: center;
+}
+
+.c0 > div.pageCredits > a {
+  color: white;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="pageCredits"
+  >
+    Created with ❤️  by 
+    <a
+      href="https://github.com/alexieyizhe"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Alex Yizhe Xie
+    </a>
+     for the Shopify Front End Challenge (Summer 2019)
+  </div>
+</div>
+`;
