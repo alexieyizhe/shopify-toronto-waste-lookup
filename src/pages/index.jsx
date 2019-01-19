@@ -76,15 +76,13 @@ class App extends React.Component {
       updateSearch: this.updateSearch, // eslint-disable-line
       startSearch: this.startSearch // eslint-disable-line
     }
-    console.log('set initial state');
   }
 
 
   componentDidMount() {
     /* INITIALIZE ALL OF THE APP! */
     this.initAppData();
-    console.log('initialized data');
-    console.log(this.state)
+
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
     window.addEventListener(
@@ -114,8 +112,7 @@ class App extends React.Component {
     let lastAPICall = localStorage.getItem('lastAPICall');
     try {
       lastAPICall = JSON.parse(lastAPICall);
-      if(lastAPICall - Date.now() > 86400000) { // refresh API results
-        console.log('refreshing');
+      if(lastAPICall - Date.now() > 86400000) { // refresh stale API results
         this.fetchWasteItemData();
       }
     } catch(e) {

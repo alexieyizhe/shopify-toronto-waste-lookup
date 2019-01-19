@@ -9,6 +9,10 @@ exports[`renders correctly 1`] = `
   background-color: #23975e15;
 }
 
+.c0 *:focus {
+  outline: none;
+}
+
 .c1 {
   font-size: 1.5em;
   font-weight: 700;
@@ -25,24 +29,28 @@ exports[`renders correctly 1`] = `
     Favourites
   </div>
   <div
-    _pose="enter"
+    className=""
   >
-    test div
-  </div>
-  <a
-    _pose="enter"
-    href="test thing thing"
-  >
-    test link
-  </a>
-  <div
-    _pose="enter"
-  >
-    <div>
-      wogewog
-      <span>
-        wgwegww????!@$!@
-      </span>
+    <div
+      _pose="enter"
+    >
+      test div
+    </div>
+    <a
+      _pose="enter"
+      href="test thing thing"
+    >
+      test link
+    </a>
+    <div
+      _pose="enter"
+    >
+      <div>
+        wogewog
+        <span>
+          wgwegww????!@$!@
+        </span>
+      </div>
     </div>
   </div>
 </div>

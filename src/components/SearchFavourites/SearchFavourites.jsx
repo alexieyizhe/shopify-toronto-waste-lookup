@@ -49,7 +49,6 @@ const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
 
 // Component
 export default ({ children }) => {
-  console.log(children);
   return (
     <ComponentContainer>
       <SubHeader>{siteSubtitle}</SubHeader>
