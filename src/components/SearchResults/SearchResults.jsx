@@ -67,7 +67,7 @@ export default ({ children }) => (
           default:
             disclaimerContents = {text: 'This is a test disclaimer', color: 'grey'};
         }
-        return (
+        return (typeof window !== 'undefined' && DraggableContainer && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
           <DraggableContainer type="sortable">
             <PoseGroup>
               {showDisclaimer ? <EmptyDisclaimer key="emptyDisclaimerSearch" color={disclaimerContents.color}><span>{disclaimerContents.text}</span></EmptyDisclaimer> : children}

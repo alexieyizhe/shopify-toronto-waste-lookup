@@ -145,10 +145,11 @@ const unescapeHtml = (safe) => (
       .replace(/&#039;/g, "'")
 );
 
+
 // Component
 export const NoAnimItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) => (
   <ItemsContext.Consumer>
-    {({items, favs, updateFavs}) => (
+    {({items, favs, updateFavs}) => (typeof window !== 'undefined' && DraggableItem && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
       <DraggableItem eleRef={innerRef} style={{borderRadius: '5px'}} className="draggableItemContainer">
         <ComponentContainer>
           <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}>

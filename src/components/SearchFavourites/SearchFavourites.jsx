@@ -53,11 +53,14 @@ export default ({ children }) => {
   return (
     <ComponentContainer>
       <SubHeader>{siteSubtitle}</SubHeader>
-      <DraggableContainer type="sortable">
-        <PoseGroup>
-          {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
-        </PoseGroup>
-      </DraggableContainer>
+      {
+        typeof window !== 'undefined' && DraggableContainer && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
+        <DraggableContainer type="sortable">
+          <PoseGroup>
+            {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
+          </PoseGroup>
+        </DraggableContainer>
+      }
     </ComponentContainer>
   );
 }
