@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import "isomorphic-fetch";
 
-import { siteTitle, siteTheme, wasteDataAPIEndPoint, FetchStateEnum } from '../utils/siteData';
+import { siteTitle, siteTheme, wasteDataAPIEndPoint, FetchStateEnum, LocalStorageKeysEnum } from '../utils/siteData';
 import { GlobalStyle, mediaSize } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
@@ -35,7 +35,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    /* CONTEXT UPDATING FUNCTIONS */
+    /* DEFINE CONTEXT UPDATING FUNCTIONS */
     this.updateFavs = (wasteItemIndex, remove = false) => {
       this.setState(prevState => {
         if(remove) prevState.currentFavs.delete(wasteItemIndex);
@@ -62,22 +62,11 @@ class App extends React.Component {
           const match = (item.keywords.search(searchQuery) >= 0);
           if(match) newSearchResults.add(i);
         });
-        this.setState({ searchResults: newSearchResults, appStatus: FetchStateEnum.SEARCHING })
+        this.setState({ searchResults: newSearchResults, appStatus: FetchStateEnum.SEARCHING });
       }
     }
 
-    /* FETCHING JSON DATA FROM API */
-    fetch(wasteDataAPIEndPoint).then(response => (
-      response.json()
-    )).then(wasteItemData => {
-      this.wasteItems = wasteItemData;
-      this.setState({ appStatus: FetchStateEnum.READY });
-    }).catch(() => {
-      // TODO: add error handling, possible in state to display an error when API is down
-      this.setState({ appStatus: FetchStateEnum.ERROR });
-    });
-
-    /* SET INITIAL STATE */
+    // SET INITIAL STATE
     this.state = {
       appStatus: FetchStateEnum.WAITING,
       searchQuery: '',
@@ -87,6 +76,113 @@ class App extends React.Component {
       updateSearch: this.updateSearch, // eslint-disable-line
       startSearch: this.startSearch // eslint-disable-line
     }
+  }
+
+
+  componentDidMount() {
+    /* INITIALIZE ALL OF THE APP! */
+    this.initAppData();
+
+    // add event listener to save state to localStorage
+    // when user leaves/refreshes the page
+    window.addEventListener(
+      "beforeunload",
+      () => this.saveStatusToStorage() // TODO: replace with this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+
+  componentWillUnmount() {
+      window.removeEventListener(
+        "beforeunload",
+        () => this.saveStatusToStorage()
+      );
+
+      // saves if component has a chance to unmount
+      this.saveStatusToStorage();
+  }
+
+
+  /* INITIALIZE THE DATA REQUIRED FOR THE APP TO FUNCTION */
+  initAppData() {
+    /* FETCH DATA FROM LOCALSTORAGE */
+    const appReady = this.loadStatusFromStorage();
+
+    // fetch the data
+    let lastAPICall = localStorage.getItem('lastAPICall');
+    try {
+      lastAPICall = JSON.parse(lastAPICall);
+      if(lastAPICall - Date.now() > 86400000) { // refresh stale API results
+        this.fetchWasteItemData();
+      }
+    } catch(e) {
+      console.log(e);
+    }
+
+    if(!appReady) this.fetchWasteItemData();
+
+  }
+
+
+  /* FETCHING JSON DATA FROM API */
+  fetchWasteItemData() {
+    fetch(wasteDataAPIEndPoint).then(response => (
+      response.json()
+    )).then(wasteItemData => {
+      this.wasteItems = wasteItemData;
+      localStorage.setItem('lastAPICall', JSON.stringify(Date.now()));
+      this.setState({ appStatus: FetchStateEnum.READY });
+    }).catch(() => {
+      this.setState({ appStatus: FetchStateEnum.ERROR });
+    });
+  }
+
+
+  /* save the current app's status to local storage */
+  saveStatusToStorage() {
+    Object.keys(LocalStorageKeysEnum).forEach((key) => {
+      if(key === 'lastAPIResults') {
+        localStorage.setItem('lastAPIResults', JSON.stringify(this.wasteItems));
+
+      } else if(key === 'lastFavourites' || key === 'lastSearchResults'){
+        localStorage.setItem(key, JSON.stringify(Array.from(this.state[LocalStorageKeysEnum[key]]))); // eslint-disable-line
+
+      } else {
+        localStorage.setItem(key, JSON.stringify(this.state[LocalStorageKeysEnum[key]])); // eslint-disable-line
+      }
+
+    });
+
+  }
+
+  /* loads a status from local storage, returns true if possible, false if not */
+  loadStatusFromStorage() {
+    Object.keys(LocalStorageKeysEnum).forEach((key) => {
+      if(localStorage.hasOwnProperty(key)) { // eslint-disable-line
+        let valueInStorage = localStorage.getItem(key);
+        try {
+          valueInStorage = JSON.parse(valueInStorage);
+
+          if(key === 'lastAPIResults') {
+            this.wasteItems = valueInStorage;
+
+          } else if(key === 'lastFavourites' || key === 'lastSearchResults'){
+            this.setState({ [LocalStorageKeysEnum[key]]: new Set(Array.from(valueInStorage)) });
+
+          } else {
+            this.setState({ [LocalStorageKeysEnum[key]]: valueInStorage });
+          }
+        } catch(e) {
+          console.log(e);
+        }
+      }
+    });
+
+    if(this.wasteItems) {
+      this.setState({ appStatus: FetchStateEnum.READY });
+      return true;
+    }
+    return false;
   }
 
 
@@ -105,11 +201,11 @@ class App extends React.Component {
 
 
               <SearchResults>
-                {(appStatus === FetchStateEnum.READY || appStatus === FetchStateEnum.SEARCHING) &&
+                {appStatus !== FetchStateEnum.WAITING &&
                   Array.from(searchResults).map((resultIndex, i) => {
-                  const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
-                  return resultItem ? <ItemCard delayIndex={i} key={`favs${resultIndex}`} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
-                })}
+                    const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
+                    return resultItem ? <ItemCard delayIndex={i} key={`favs${resultIndex}`} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
+                  })}
               </SearchResults>
 
 
@@ -131,19 +227,3 @@ class App extends React.Component {
 
 
 export default App;
-
-
-// export const pageQuery = graphql`
-//   query contentQuery {
-//     allContentJson {
-//       edges {
-//         node {
-//           index {
-//             title
-//             subtitle
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;

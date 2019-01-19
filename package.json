@@ -5,9 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@wuweiweiwu/react-shopify-draggable": "0.0.5",
     "es6-promise": "^4.2.5",
     "gatsby": "^2.0.86",
-    "gatsby-image": "^2.0.25",
     "gatsby-plugin-react-helmet": "^3.0.5",
     "gatsby-plugin-sharp": "^2.0.17",
     "gatsby-plugin-styled-components": "^3.0.4",
@@ -15,7 +15,6 @@
     "gatsby-transformer-sharp": "^2.1.10",
     "isomorphic-fetch": "^2.2.1",
     "jest-styled-components": "^6.3.1",
-    "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

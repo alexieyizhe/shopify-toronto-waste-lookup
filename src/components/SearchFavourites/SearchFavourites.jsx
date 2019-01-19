@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
+import { DraggableContainer } from '@wuweiweiwu/react-shopify-draggable';
 
 import { siteSubtitle, favsEmptyPlaceholder } from '../../utils/siteData';
 
@@ -12,6 +13,10 @@ const ComponentContainer = styled.div`
   margin: 0; // margin allows for margin collapsing
   padding: 2vh;
   background-color: ${props => `${props.theme.colors.secondary}15`}; // 8 digit hex code includes alpha value
+
+  & *:focus {
+    outline: none;
+  }
 `;
 
 
@@ -33,7 +38,7 @@ const DisclaimerAnim = {
   exit: { opacity: 0 }
 }
 
-        
+
 const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
   width: 75%;
   margin: 5vh auto;
@@ -43,11 +48,18 @@ const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
 `;
 
 // Component
-export default ({ children }) => (
-  <ComponentContainer>
-    <SubHeader>{siteSubtitle}</SubHeader>
-    <PoseGroup>
-      {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
-    </PoseGroup>
-  </ComponentContainer>
-);
+export default ({ children }) => {
+  return (
+    <ComponentContainer>
+      <SubHeader>{siteSubtitle}</SubHeader>
+      {
+        typeof window !== 'undefined' && DraggableContainer && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
+        <DraggableContainer type="sortable">
+          <PoseGroup>
+            {children.length > 0 ? children : <EmptyDisclaimer key="emptyDisclaimerFavs"><span>{favsEmptyPlaceholder}</span></EmptyDisclaimer>}
+          </PoseGroup>
+        </DraggableContainer>
+      }
+    </ComponentContainer>
+  );
+}

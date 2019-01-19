@@ -4,6 +4,7 @@ export const siteTheme = {
   colors: {
     primary: '#1d5a94',
     secondary: '#23975e',
+    secondaryBg: '#b5d2c4',
 
     warning: '#F4A867',
     error: '#F07285',
@@ -34,3 +35,11 @@ export const siteSubtitle = 'Favourites';
 export const wasteDataAPIEndPoint = 'https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000';
 
 export const FetchStateEnum = { ERROR: 0, WAITING: 1, READY: 2, SEARCHING: 3 };
+
+export const LocalStorageKeysEnum = {
+  lastAPIResults: 'wasteItems',
+  lastSearchQuery: 'searchQuery',
+  lastSearchResults: 'searchResults',
+  lastFavourites: 'currentFavs',
+  lastStatus: 'appStatus',
+};
