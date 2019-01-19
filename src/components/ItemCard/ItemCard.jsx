@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import styled, { withTheme } from 'styled-components';
 import posed from 'react-pose';
+import PropTypes from "prop-types";
 import { DraggableItem } from '@wuweiweiwu/react-shopify-draggable';
 
 import { ItemsContext } from '../../utils/siteContext';
@@ -147,9 +148,9 @@ const unescapeHtml = (safe) => (
 
 
 // Component
-export const NoAnimItemCard = forwardRef(({title, body, ith, isFavourite, theme}, innerRef) => (
+export const NoAnimItemCard = forwardRef(({title, body, ith, isFavourite}, innerRef) => (
   <ItemsContext.Consumer>
-    {({items, favs, updateFavs}) => (typeof window !== 'undefined' && DraggableItem && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
+    {({updateFavs}) => (typeof window !== 'undefined' && DraggableItem && // react-shopify-draggable does not verify existence of global window (https://www.gatsbyjs.org/docs/debugging-html-builds/ and https://github.com/gatsbyjs/gatsby/issues/9038)
       <DraggableItem eleRef={innerRef} style={{borderRadius: '5px'}} className="draggableItemContainer">
         <ComponentContainer>
           <FavouriteButton onClick={() => updateFavs(ith, isFavourite)}>
@@ -159,12 +160,21 @@ export const NoAnimItemCard = forwardRef(({title, body, ith, isFavourite, theme}
             </svg>
           </FavouriteButton>
           <TitleContainer>{title}</TitleContainer>
-          <DescContainer dangerouslySetInnerHTML={{__html: unescapeHtml(body)}}></DescContainer> { /*  TODO: possibly implement sanitizing script that makes sure the only html elements are <ul>, <li>, and <strong> */ }
+          <DescContainer dangerouslySetInnerHTML={{__html: unescapeHtml(body)}} /> { /* Given more time, could possibly implement sanitizing script that makes sure the only html elements are <ul>, <li>, and <strong> */ }
           { /*  ^^ Not really sure what the best way to sanitize this and make it safe without expending lots of effort with parsing the HTML body it returns, but the API is trusted so this should be safe */ }
         </ComponentContainer>
       </DraggableItem>
     )}
   </ItemsContext.Consumer>
 ));
+
+
+NoAnimItemCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  ith: PropTypes.number.isRequired,
+  isFavourite: PropTypes.bool.isRequired
+};
+
 
 export default posed(withTheme(NoAnimItemCard))(CardAnim);

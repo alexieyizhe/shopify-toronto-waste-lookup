@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import { DraggableContainer } from '@wuweiweiwu/react-shopify-draggable';
@@ -42,7 +43,7 @@ const EmptyDisclaimer = styled(posed.div(DisclaimerAnim))`
 `;
 
 // Component
-export default ({ children }) => (
+const SearchResults = ({ children }) => (
   <ComponentContainer>
     <ItemsContext.Consumer>
       {({ appStatus }) => {
@@ -78,3 +79,16 @@ export default ({ children }) => (
 
   </ComponentContainer>
 );
+
+
+
+
+SearchResults.propTypes = {
+  children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]).isRequired
+};
+
+
+export default SearchResults;

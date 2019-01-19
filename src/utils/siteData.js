@@ -1,5 +1,3 @@
-// should refactor into json and move into data folder later
-
 export const siteTheme = {
   colors: {
     primary: '#1d5a94',
@@ -43,3 +41,5 @@ export const LocalStorageKeysEnum = {
   lastFavourites: 'currentFavs',
   lastStatus: 'appStatus',
 };
+
+export const DAY_MS = 86400000;

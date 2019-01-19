@@ -17,6 +17,7 @@ export const mediaSize = Object.keys(displaySizes).reduce((acc, label) => {
 }, {});
 
 
+// Global style reset
 export const GlobalStyle = createGlobalStyle`
   html, body {
     margin: 0;

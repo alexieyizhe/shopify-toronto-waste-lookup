@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import "isomorphic-fetch";
 
-import { siteTitle, siteTheme, wasteDataAPIEndPoint, FetchStateEnum, LocalStorageKeysEnum } from '../utils/siteData';
+import { siteTitle, siteTheme, wasteDataAPIEndPoint, FetchStateEnum, LocalStorageKeysEnum, DAY_MS } from '../utils/siteData';
 import { GlobalStyle, mediaSize } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
@@ -12,9 +12,9 @@ import SearchBar from '../components/SearchBar/SearchBar';
 import SearchResults from '../components/SearchResults/SearchResults';
 import SearchFavourites from '../components/SearchFavourites/SearchFavourites';
 import ItemCard from '../components/ItemCard/ItemCard';
+import PageFooter from '../components/PageFooter/PageFooter';
 
 
-// refactor into template later?
 const AppContainer = styled.div`
   width: 100vw;
   height: auto;
@@ -34,6 +34,7 @@ const AppContainer = styled.div`
 class App extends React.Component {
   constructor(props) {
     super(props);
+
 
     /* DEFINE CONTEXT UPDATING FUNCTIONS */
     this.updateFavs = (wasteItemIndex, remove = false) => {
@@ -59,14 +60,15 @@ class App extends React.Component {
         let newSearchResults = new Set(); // eslint-disable-line
 
         this.wasteItems.forEach((item, i) => {
-          const match = (item.keywords.search(searchQuery) >= 0);
+          const match = (item.keywords.indexOf(searchQuery) >= 0);
           if(match) newSearchResults.add(i);
         });
         this.setState({ searchResults: newSearchResults, appStatus: FetchStateEnum.SEARCHING });
       }
     }
 
-    // SET INITIAL STATE
+
+    /* SET INITIAL STATE */
     this.state = {
       appStatus: FetchStateEnum.WAITING,
       searchQuery: '',
@@ -80,14 +82,14 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    /* INITIALIZE ALL OF THE APP! */
+    /* INITIALIZE ALL DATA OF THE APP */
     this.initAppData();
 
-    // add event listener to save state to localStorage
+    // Add event listener to save state to localStorage
     // when user leaves/refreshes the page
     window.addEventListener(
       "beforeunload",
-      () => this.saveStatusToStorage() // TODO: replace with this.saveStateToLocalStorage.bind(this)
+      () => this.saveStatusToStorage()
     );
   }
 
@@ -98,7 +100,7 @@ class App extends React.Component {
         () => this.saveStatusToStorage()
       );
 
-      // saves if component has a chance to unmount
+      // Saves if component has a chance to unmount
       this.saveStatusToStorage();
   }
 
@@ -112,15 +114,14 @@ class App extends React.Component {
     let lastAPICall = localStorage.getItem('lastAPICall');
     try {
       lastAPICall = JSON.parse(lastAPICall);
-      if(lastAPICall - Date.now() > 86400000) { // refresh stale API results
+      if(lastAPICall - Date.now() > DAY_MS) { // refresh stale API results
         this.fetchWasteItemData();
       }
     } catch(e) {
       console.log(e);
     }
 
-    if(!appReady) this.fetchWasteItemData();
-
+    if(!appReady) this.fetchWasteItemData(); // did not find API call cached in localStorage
   }
 
 
@@ -150,9 +151,7 @@ class App extends React.Component {
       } else {
         localStorage.setItem(key, JSON.stringify(this.state[LocalStorageKeysEnum[key]])); // eslint-disable-line
       }
-
     });
-
   }
 
   /* loads a status from local storage, returns true if possible, false if not */
@@ -178,7 +177,7 @@ class App extends React.Component {
       }
     });
 
-    if(this.wasteItems) {
+    if(this.wasteItems) { // found API call results cached already in localStorage
       this.setState({ appStatus: FetchStateEnum.READY });
       return true;
     }
@@ -194,11 +193,12 @@ class App extends React.Component {
           <HelmetHead />
           <GlobalStyle />
           <AppContainer>
+
+
             <PageHeader title={siteTitle} />
             <ItemsContext.Provider value={this.state}>
 
               <SearchBar />
-
 
               <SearchResults>
                 {appStatus !== FetchStateEnum.WAITING &&
@@ -208,16 +208,16 @@ class App extends React.Component {
                   })}
               </SearchResults>
 
-
               <SearchFavourites>
                 {Array.from(currentFavs).map((favIndex, i) => {
                   const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
                   return favItem ? <ItemCard delayIndex={i} key={`favs${favIndex}`} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
-              })}
-            </SearchFavourites>
+                })}
+              </SearchFavourites>
 
 
             </ItemsContext.Provider>
+            <PageFooter />
           </AppContainer>
         </>
       </ThemeProvider>
