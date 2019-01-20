@@ -1,8 +1,16 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import "isomorphic-fetch";
+import { debounce } from 'debounce';
+import 'isomorphic-fetch';
 
-import { siteTitle, siteTheme, wasteDataAPIEndPoint, FetchStateEnum, LocalStorageKeysEnum, DAY_MS } from '../utils/siteData';
+import {
+  siteTitle,
+  siteTheme,
+  wasteDataAPIEndPoint,
+  FetchStateEnum,
+  LocalStorageKeysEnum,
+  DAY_MS
+} from '../utils/siteData';
 import { GlobalStyle, mediaSize } from '../utils/siteTools';
 import { ItemsContext } from '../utils/siteContext';
 
@@ -14,7 +22,7 @@ import SearchFavourites from '../components/SearchFavourites/SearchFavourites';
 import ItemCard from '../components/ItemCard/ItemCard';
 import PageFooter from '../components/PageFooter/PageFooter';
 
-
+/* --- STYLES & ANIMATIONS --- */
 const AppContainer = styled.div`
   width: 100vw;
   height: auto;
@@ -30,56 +38,68 @@ const AppContainer = styled.div`
   `}
 `;
 
-
+/* --- Component --- */
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-
     /* DEFINE CONTEXT UPDATING FUNCTIONS */
     this.updateFavs = (wasteItemIndex, remove = false) => {
       this.setState(prevState => {
-        if(remove) prevState.currentFavs.delete(wasteItemIndex);
+        if (remove) prevState.currentFavs.delete(wasteItemIndex);
         else prevState.currentFavs.add(wasteItemIndex);
 
         return prevState;
       });
-    }
+    };
 
-    this.updateSearch = (searchQuery) => {
+    this.updateSearch = searchQuery => {
       this.setState(prevState => ({
         searchQuery,
         searchResults: searchQuery.length ? prevState.searchResults : new Set(),
-        appStatus: searchQuery.length ? prevState.appStatus : FetchStateEnum.READY
+        appStatus: searchQuery.length
+          ? prevState.appStatus
+          : FetchStateEnum.READY
       }));
-    }
+
+      if (searchQuery.length) {
+        this.setState({ appStatus: FetchStateEnum.SEARCHING });
+        this.delayedStartSearch();
+      } else {
+        this.setState({ appStatus: FetchStateEnum.READY });
+      }
+    };
 
     this.startSearch = () => {
-      if(this.state.appStatus === FetchStateEnum.READY || this.state.appStatus === FetchStateEnum.SEARCHING) { // eslint-disable-line
+      if (
+        this.state.appStatus === FetchStateEnum.SEARCHING &&
+        this.state.searchQuery.length
+      ) {
         const { searchQuery } = this.state;
-        let newSearchResults = new Set(); // eslint-disable-line
+        const newSearchResults = new Set();
 
         this.wasteItems.forEach((item, i) => {
-          const match = (item.keywords.indexOf(searchQuery) >= 0);
-          if(match) newSearchResults.add(i);
+          const match = item.keywords.indexOf(searchQuery) >= 0;
+          if (match) newSearchResults.add(i);
         });
-        this.setState({ searchResults: newSearchResults, appStatus: FetchStateEnum.SEARCHING });
+        this.setState({ searchResults: newSearchResults });
       }
-    }
+      this.setState({ appStatus: FetchStateEnum.SEARCHED });
+    };
 
+    this.delayedStartSearch = debounce(() => this.startSearch(), 1000);
 
     /* SET INITIAL STATE */
     this.state = {
       appStatus: FetchStateEnum.WAITING,
       searchQuery: '',
       searchResults: new Set(),
-      currentFavs: new Set(), // eslint-disable-line
-      updateFavs: this.updateFavs, // eslint-disable-line
-      updateSearch: this.updateSearch, // eslint-disable-line
-      startSearch: this.startSearch // eslint-disable-line
-    }
+      currentFavs: new Set(),
+      updateFavs: this.updateFavs,
+      updateSearch: this.updateSearch,
+      startSearch: this.startSearch
+    };
   }
-
 
   componentDidMount() {
     /* INITIALIZE ALL DATA OF THE APP */
@@ -87,103 +107,109 @@ class App extends React.Component {
 
     // Add event listener to save state to localStorage
     // when user leaves/refreshes the page
-    window.addEventListener(
-      "beforeunload",
-      () => this.saveStatusToStorage()
-    );
+    window.addEventListener('beforeunload', () => this.saveStatusToStorage());
   }
-
 
   componentWillUnmount() {
-      window.removeEventListener(
-        "beforeunload",
-        () => this.saveStatusToStorage()
-      );
+    // Removes event listener added on mount to unload
+    window.removeEventListener('beforeunload', () =>
+      this.saveStatusToStorage()
+    );
 
-      // Saves if component has a chance to unmount
-      this.saveStatusToStorage();
+    // Saves the status much like on unload
+    this.saveStatusToStorage();
   }
 
-
-  /* INITIALIZE THE DATA REQUIRED FOR THE APP TO FUNCTION */
+  /* Initialize the data the app needs from available sources */
   initAppData() {
     /* FETCH DATA FROM LOCALSTORAGE */
     const appReady = this.loadStatusFromStorage();
 
-    // fetch the data
+    // Get time of last API call
     let lastAPICall = localStorage.getItem('lastAPICall');
     try {
       lastAPICall = JSON.parse(lastAPICall);
-      if(lastAPICall - Date.now() > DAY_MS) { // refresh stale API results
+      if (lastAPICall - Date.now() > DAY_MS) {
+        // refresh stale API results
         this.fetchWasteItemData();
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
 
-    if(!appReady) this.fetchWasteItemData(); // did not find API call cached in localStorage
+    if (!appReady) this.fetchWasteItemData(); // did not find API call cached in localStorage
   }
 
-
-  /* FETCHING JSON DATA FROM API */
+  /* Fetch JSON waste item data from the API */
   fetchWasteItemData() {
-    fetch(wasteDataAPIEndPoint).then(response => (
-      response.json()
-    )).then(wasteItemData => {
-      this.wasteItems = wasteItemData;
-      localStorage.setItem('lastAPICall', JSON.stringify(Date.now()));
-      this.setState({ appStatus: FetchStateEnum.READY });
-    }).catch(() => {
-      this.setState({ appStatus: FetchStateEnum.ERROR });
-    });
+    fetch(wasteDataAPIEndPoint)
+      .then(response => response.json())
+      .then(wasteItemData => {
+        this.wasteItems = wasteItemData;
+        localStorage.setItem('lastAPICall', JSON.stringify(Date.now()));
+        this.setState({ appStatus: FetchStateEnum.READY });
+      })
+      .catch(() => {
+        this.setState({ appStatus: FetchStateEnum.ERROR });
+      });
   }
 
-
-  /* save the current app's status to local storage */
+  /* Save the app's current status to localStorage */
   saveStatusToStorage() {
-    Object.keys(LocalStorageKeysEnum).forEach((key) => {
-      if(key === 'lastAPIResults') {
+    Object.keys(LocalStorageKeysEnum).forEach(key => {
+      if (key === 'lastAPIResults') {
         localStorage.setItem('lastAPIResults', JSON.stringify(this.wasteItems));
-
-      } else if(key === 'lastFavourites' || key === 'lastSearchResults'){
-        localStorage.setItem(key, JSON.stringify(Array.from(this.state[LocalStorageKeysEnum[key]]))); // eslint-disable-line
-
+      } else if (key === 'lastFavourites' || key === 'lastSearchResults') {
+        localStorage.setItem(
+          key,
+          JSON.stringify(Array.from(this.state[LocalStorageKeysEnum[key]]))
+        );
+      } // prevent getting stuck on displaying SEARCHING status forever
+      else if (key === 'lastStatus') {
+        localStorage.setItem(
+          key,
+          JSON.stringify(
+            this.state.appStatus === FetchStateEnum.SEARCHING
+              ? FetchStateEnum.READY
+              : this.state.appStatus
+          )
+        );
       } else {
-        localStorage.setItem(key, JSON.stringify(this.state[LocalStorageKeysEnum[key]])); // eslint-disable-line
+        localStorage.setItem(
+          key,
+          JSON.stringify(this.state[LocalStorageKeysEnum[key]])
+        );
       }
     });
   }
 
-  /* loads a status from local storage, returns true if possible, false if not */
+  /* Loads the data the app needs from localStorage */
   loadStatusFromStorage() {
-    Object.keys(LocalStorageKeysEnum).forEach((key) => {
-      if(localStorage.hasOwnProperty(key)) { // eslint-disable-line
+    Object.keys(LocalStorageKeysEnum).forEach(key => {
+      if (localStorage.hasOwnProperty(key)) {
+        // eslint-disable-line
         let valueInStorage = localStorage.getItem(key);
         try {
           valueInStorage = JSON.parse(valueInStorage);
 
-          if(key === 'lastAPIResults') {
+          if (key === 'lastAPIResults') {
             this.wasteItems = valueInStorage;
-
-          } else if(key === 'lastFavourites' || key === 'lastSearchResults'){
-            this.setState({ [LocalStorageKeysEnum[key]]: new Set(Array.from(valueInStorage)) });
-
+          } else if (key === 'lastFavourites' || key === 'lastSearchResults') {
+            this.setState({
+              [LocalStorageKeysEnum[key]]: new Set(Array.from(valueInStorage))
+            });
           } else {
             this.setState({ [LocalStorageKeysEnum[key]]: valueInStorage });
           }
-        } catch(e) {
+        } catch (e) {
+          // usually an invalid parse (possibly empty string)
           console.log(e);
         }
       }
     });
 
-    if(this.wasteItems) { // found API call results cached already in localStorage
-      this.setState({ appStatus: FetchStateEnum.READY });
-      return true;
-    }
-    return false;
+    return this.wasteItems !== undefined; // return true if API call results cached already in localStorage
   }
-
 
   render() {
     const { searchResults, currentFavs, appStatus } = this.state;
@@ -193,30 +219,45 @@ class App extends React.Component {
           <HelmetHead />
           <GlobalStyle />
           <AppContainer>
-
-
             <PageHeader title={siteTitle} />
-            <ItemsContext.Provider value={this.state}>
 
+            <ItemsContext.Provider value={this.state}>
               <SearchBar />
 
               <SearchResults>
                 {appStatus !== FetchStateEnum.WAITING &&
                   Array.from(searchResults).map((resultIndex, i) => {
-                    const resultItem = {...this.wasteItems[resultIndex]}; // prevent mutation of waste item catalogue
-                    return resultItem ? <ItemCard delayIndex={i} key={`favs${resultIndex}`} title={resultItem.title} body={resultItem.body} ith={resultIndex} isFavourite={currentFavs.has(resultIndex)}/> : null;
+                    const resultItem = { ...this.wasteItems[resultIndex] }; // prevent mutation of waste item catalogue
+                    return resultItem ? (
+                      <ItemCard
+                        delayIndex={i}
+                        key={`favs${resultIndex}`}
+                        title={resultItem.title}
+                        body={resultItem.body}
+                        ith={resultIndex}
+                        isFavourite={currentFavs.has(resultIndex)}
+                      />
+                    ) : null;
                   })}
               </SearchResults>
 
               <SearchFavourites>
                 {Array.from(currentFavs).map((favIndex, i) => {
-                  const favItem = {...this.wasteItems[favIndex]}; // prevent mutation of waste item catalogue
-                  return favItem ? <ItemCard delayIndex={i} key={`favs${favIndex}`} title={favItem.title} body={favItem.body} ith={favIndex} isFavourite/> : null;
+                  const favItem = { ...this.wasteItems[favIndex] }; // prevent mutation of waste item catalogue
+                  return favItem ? (
+                    <ItemCard
+                      delayIndex={i}
+                      key={`favs${favIndex}`}
+                      title={favItem.title}
+                      body={favItem.body}
+                      ith={favIndex}
+                      isFavourite
+                    />
+                  ) : null;
                 })}
               </SearchFavourites>
-
-
             </ItemsContext.Provider>
+
             <PageFooter />
           </AppContainer>
         </>
@@ -224,6 +265,5 @@ class App extends React.Component {
     );
   }
 }
-
 
 export default App;
