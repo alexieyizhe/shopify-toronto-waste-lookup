@@ -30,7 +30,8 @@ exports[`renders correctly 1`] = `
   <div
     className="pageCredits"
   >
-    Created with ❤️  by 
+    Created with ❤️ by
+     
     <a
       href="https://github.com/alexieyizhe"
       rel="noopener noreferrer"
@@ -38,7 +39,8 @@ exports[`renders correctly 1`] = `
     >
       Alex Yizhe Xie
     </a>
-     for the Shopify Front End Challenge (Summer 2019)
+     
+    for the Shopify Front End Challenge (Summer 2019)
   </div>
 </div>
 `;
