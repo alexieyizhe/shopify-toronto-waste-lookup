@@ -1,9 +1,9 @@
 # Toronto Waste Lookup
-A tool to look up proper disposal methods for waste items, with information sourced from the Toronto Waste Wizard Database.
+A tool to look up proper disposal methods for waste items, with information sourced from the Toronto Waste Wizard Database.  
 
 
 ### Motivation
-This is my attempt at helping the citizens of Toronto search up waste items. It was created as part of the [Shopify Front End Challenge for Summer 2019](https://cdn.shopify.com/static/web-eng-challenge-summer-2019/index.md), and is live at [torontowastelookup.ml](https://torontowastelookup.ml/)!  
+This is my attempt at helping the citizens of Toronto search up waste items. It was created as part of the [Shopify Web Engineer Challenge (Summer 2019)](https://cdn.shopify.com/static/web-eng-challenge-summer-2019/index.md), and is live at [torontowastelookup.ml](https://torontowastelookup.ml/)!  
 
 
 ### Features
@@ -20,21 +20,27 @@ Along with the challenge specs, I decided to add some extras to those that were 
 
 
 ### A Learning Experience
-I had a lot of fun working on this challenge, and I definitely improved a lot and learnt some new skills even from the few days that I worked on this project. I learned how to work with local storage as well as dived more in depth and expanded my understanding of the new React Context API.
+I had a lot of fun working on this challenge, and I definitely improved a lot and learnt some new skills despite the short time spent working on this project. I learned how to work with local storage as well as expanded my understanding of the new React Context API.
 
-I definitely did a lot of Googling, Stack Overflowing, and head scratching, but it was a great experience 😁 I even think this tool could be usable if the Toronto Waste Wizard Database did not already have a web interface! Thanks for putting up the challenge, Shopify!  
+I did a lot of Googling, Stack Overflowing, and head scratching, but it was a great experience 😁  I think this tool could even be usable if the Toronto Waste Wizard Database did not already have a web interface. Thanks for putting up the challenge, Shopify!  
 
 
 ### Development
 #### Setting up
 
 - Use `git clone` to clone this repository. Alternatively, download the source code.
-- Make sure required dependencies have been installed using `npm install`.
+- Make sure required dependencies have been installed using `npm install`.  
+
 
 #### Development and testing
 
 - Execute:
-  - `gatsby develop` to view site in development mode with hot reloading enabled.
+  - `npm run dev` to view site in development mode with hot reloading enabled.
+  - `npm run test` to run all tests in the Jest test suite.
+  - `npm run test:update` to run all tests in the Jest test suite and update all snapshot tests.
+  - `npm run prettier` to reformat all files that are in violation of the prettier styling rules.
+  - `npm run prettier:check` to verify if any files are violating the prettier styling rules.  
+
 
 #### Building for production
 

@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 /* --- Images & Other Assets --- */
 import Favicon from '../../assets/images/favicon.png';
 
-/* --- Component [STATELESS] --- */
+/* --- Component [FUNCTIONAL] --- */
 export default () => (
   <Helmet>
     <title>Waste Lookup TO</title>

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-
+/* --- STYLES & ANIMATIONS --- */
 const ComponentContainer = styled.div`
   background-color: grey;
   width: 100%;
@@ -10,7 +10,10 @@ const ComponentContainer = styled.div`
 
   margin-top: 2vh;
 
-  background-image: ${props => `linear-gradient(to right, ${props.theme.colors.primary}, ${props.theme.colors.secondary})`};
+  background-image: ${props =>
+    `linear-gradient(to right, ${props.theme.colors.primary}, ${
+      props.theme.colors.secondary
+    })`};
 
   display: flex;
 
@@ -23,15 +26,12 @@ const ComponentContainer = styled.div`
   }
 `;
 
-// Component
+/* --- Component [FUNCTIONAL] --- */
 const Header = ({ title }) => (
   <ComponentContainer>
-    <div className="pageTitle">
-      {title}
-    </div>
+    <div className="pageTitle">{title}</div>
   </ComponentContainer>
 );
-
 
 Header.propTypes = {
   title: PropTypes.string
